@@ -1,5 +1,17 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>안채연 포트폴리오</title>
-<!-- v12 변경 이유: NODO·Nurspace 이미지를 선명한 새 캡처로 교체, 미사용 이미지 정리 -->
+<!-- v16 변경 이유: 멘토링("이력이 중구난방") 반영. v13 디자인 기준으로 상세 사례를 3개로 줄이고, BERT 서술을 서비스 미적용 결정으로 정정 -->
+<!-- v13 변경 이유:charset·viewport 누락 수정, 작업 목록 빈 공간·썸네일 통일, 히어로 위계 조정, 호버·등장 모션, 모바일 레이아웃 -->
+<meta name="description" content="AI 개발 포트폴리오. 고령자 음성 AI 서비스 ORA, 심리검사지 OCR 자동화, 텍스트 위조 탐지 연구 등 주요 작업 3개.">
+<meta property="og:title" content="안채연 포트폴리오">
+<meta property="og:description" content="모델을 수치로 비교해 고르고, 서비스에 맞는 구조로 설계합니다.">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0E10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23121418'/%3E%3Cpath d='M38 16 26 48' stroke='%23F4F5F7' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
@@ -13,6 +25,7 @@
   --display:'Archivo','Noto Sans KR',sans-serif;
   --text:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
   --mono:'JetBrains Mono','Noto Sans KR',Consolas,monospace;
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0D0E10; --panel:#15171A; --panel-2:#1C1F23; --side:#15171A; --line:#2B2F35; --fg:#ECEDEF; --muted:#A3A9B1; --ghost:#3A3F46; --invert:#F2F3F4; --on-invert:#0D0E10; --meter:#7C838C; color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#0D0E10; --panel:#15171A; --panel-2:#1C1F23; --side:#15171A; --line:#2B2F35; --fg:#ECEDEF; --muted:#A3A9B1; --ghost:#3A3F46; --invert:#F2F3F4; --on-invert:#0D0E10; --meter:#7C838C; color-scheme:dark}
@@ -27,6 +40,8 @@ a{color:inherit}
 :focus-visible{outline:2px solid var(--invert); outline-offset:3px}
 ::selection{background:var(--invert); color:var(--on-invert)}
 
+.skip-link{position:absolute; left:16px; top:-60px; z-index:20; background:var(--invert); color:var(--on-invert); padding:10px 16px; border-radius:6px; text-decoration:none; transition:top .2s var(--ease-out)}
+.skip-link:focus{top:12px}
 .frame{max-width:1280px; margin:0 auto; padding-inline:clamp(16px,3vw,32px)}
 .label{font-family:var(--mono); font-size:.85rem; color:var(--muted); letter-spacing:.01em}
 
@@ -35,12 +50,16 @@ a{color:inherit}
 .bar .frame{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; min-height:60px; gap:16px}
 .bar b{font-weight:700}
 .bar nav{display:flex; gap:clamp(12px,3vw,36px)}
-.bar nav a{text-decoration:none; font-size:.95rem; color:var(--muted); padding-block:10px}
-.bar nav a:hover{color:var(--fg)}
+.bar nav a{text-decoration:none; font-size:.95rem; color:var(--muted); padding-block:10px; position:relative; transition:color .2s ease}
+.bar nav a::after{content:""; position:absolute; left:0; right:0; bottom:4px; height:2px; background:var(--fg); transform:scaleX(0); transform-origin:left; transition:transform .25s var(--ease-out)}
+.bar nav a:hover,.bar nav a[aria-current="true"]{color:var(--fg)}
+.bar nav a[aria-current="true"]::after{transform:scaleX(1)}
 .bar-end{justify-self:end; display:flex; align-items:center; gap:16px}
-.theme{font:inherit; font-size:.85rem; color:var(--fg); background:transparent; border:1px solid var(--line); border-radius:999px; padding:6px 14px; min-height:40px; cursor:pointer}
+.theme{font:inherit; font-size:.85rem; color:var(--fg); background:transparent; border:1px solid var(--line); border-radius:999px; padding:6px 14px; min-height:40px; cursor:pointer; transition:border-color .2s ease, transform .16s var(--ease-out)}
 .theme:hover{border-color:var(--muted)}
-@media (max-width:640px){.bar .frame{grid-template-columns:auto 1fr auto}.bar .label{display:none}.bar nav{justify-self:end}}
+.theme:active,.copy:active{transform:scale(.97)}
+@media (max-width:640px){.bar .frame{grid-template-columns:auto 1fr auto; gap:10px}.bar .label{display:none}.bar nav{justify-self:end; gap:14px}.bar nav a{font-size:.85rem; white-space:nowrap}.theme{padding:6px 10px; font-size:.78rem; white-space:nowrap}}
+@media (max-width:380px){.bar nav{display:none}.bar .frame{grid-template-columns:1fr auto}}
 
 /* 히어로 */
 .hero{border-bottom:1px solid var(--line)}
@@ -48,27 +67,33 @@ a{color:inherit}
 .hero-top span{padding:14px 0}
 .hero-top span:nth-child(2){text-align:center}
 .hero-top span:nth-child(3){text-align:right}
-.hero-word{font-family:var(--display); font-weight:800; font-stretch:125%; font-size:clamp(3.4rem,15vw,13.5rem); line-height:.86; letter-spacing:-.045em; padding-block:clamp(28px,5vw,56px) 0; color:var(--fg)}
-.hero-main{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:clamp(24px,5vw,64px); padding-block:clamp(36px,6vw,72px); align-items:end}
-.hero-main h1{font-size:clamp(2.6rem,6vw,4.4rem); font-weight:900; letter-spacing:-.03em; line-height:1}
-.hero-main h1 small{display:block; font-size:1.05rem; font-weight:400; color:var(--muted); letter-spacing:0; margin-top:14px; line-height:1.5}
-.hero-main p{font-size:clamp(1.25rem,2.4vw,1.7rem); line-height:1.5; font-weight:500}
+@media (max-width:480px){.hero-top{grid-template-columns:1fr 1fr}.hero-top span:nth-child(2){display:none}.hero-top span{white-space:nowrap}}
+/* v13: 이름과 한 문장이 먼저 보이도록 "Portfolio"는 옅은 배경 글자로 낮춤 */
+.hero-word{font-family:var(--display); font-weight:800; font-stretch:125%; font-size:clamp(2.8rem,10.5vw,9.6rem); line-height:.86; letter-spacing:-.045em; padding-block:clamp(24px,4vw,44px) 0; color:var(--ghost); user-select:none}
+.hero-main{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:clamp(24px,5vw,64px); padding-block:clamp(28px,4vw,48px) clamp(40px,6vw,72px); align-items:end}
+.hero-main h1{font-size:clamp(3.2rem,8vw,6.6rem); font-weight:900; letter-spacing:-.04em; line-height:.95}
+.hero-main h1 small{display:block; font-size:1.05rem; font-weight:500; color:var(--muted); letter-spacing:0; margin-top:18px; line-height:1.5}
+.hero-main p{font-size:clamp(1.35rem,2.6vw,1.95rem); line-height:1.45; font-weight:700; letter-spacing:-.02em; max-width:22em}
 @media (max-width:760px){.hero-main{grid-template-columns:1fr}}
 .info{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line)}
 .info > div{padding:22px 24px 26px 0; display:flex; flex-direction:column; gap:6px}
 .info > div + div{padding-left:24px; border-left:1px solid var(--line)}
 .info dd{font-size:1.02rem}
 @media (max-width:760px){.info{grid-template-columns:1fr}.info > div + div{padding-left:0; border-left:0; border-top:1px solid var(--line)}}
-.copy{font:inherit; font-size:.9rem; color:var(--on-invert); background:var(--invert); border:0; border-radius:999px; padding:8px 16px; min-height:40px; cursor:pointer; align-self:flex-start; margin-top:6px}
+.copy{font:inherit; font-size:.9rem; color:var(--on-invert); background:var(--invert); border:0; border-radius:999px; padding:8px 16px; min-height:40px; cursor:pointer; align-self:flex-start; margin-top:6px; transition:transform .16s var(--ease-out), opacity .2s ease}
+@media (hover:hover) and (pointer:fine){.copy:hover{opacity:.86}}
 
 /* 섹션 제목 */
 .sec-head{display:flex; justify-content:space-between; align-items:end; gap:24px; padding-block:clamp(64px,10vw,120px) 24px; border-bottom:1px solid var(--line)}
 .sec-head h2{font-family:var(--display); font-weight:800; font-stretch:112%; font-size:clamp(2.6rem,8vw,6.2rem); letter-spacing:-.04em; line-height:.9}
+.sec-head h2{overflow-wrap:normal}
 .sec-head .label{text-align:right; flex:none}
+@media (max-width:560px){.sec-head{flex-direction:column; align-items:flex-start; gap:12px}.sec-head .label{text-align:left}}
 
 /* 작업 목록: 번호 칸 */
 .rows{border-bottom:1px solid var(--line)}
-.row{display:grid; grid-template-columns:96px minmax(0,1fr) minmax(0,1.15fr); text-decoration:none; border-top:1px solid var(--line); transition:background-color .2s ease-out}
+/* v13: 썸네일은 같은 비율(16:10)의 흰 판 안에 맞춤. 결과는 설명 바로 아래로 올리고, 남는 아래쪽은 "자세히" 표시로 채움 */
+.row{display:grid; grid-template-columns:96px minmax(0,1fr) minmax(0,.92fr); text-decoration:none; border-top:1px solid var(--line); transition:background-color .2s ease}
 .row:first-child{border-top:0}
 .row > *{padding:28px 28px}
 .row > * + *{border-left:1px solid var(--line)}
@@ -76,14 +101,25 @@ a{color:inherit}
 .row .txt{display:flex; flex-direction:column; gap:10px}
 .row h3{font-size:1.55rem; font-weight:700; letter-spacing:-.02em}
 .row .txt p{color:var(--muted); font-size:1.02rem}
-.row .result{margin-top:auto; padding-top:18px; font-size:1.05rem; font-weight:700}
-.row .result::before{content:"결과  "; font-family:var(--mono); font-weight:400; font-size:.8rem; color:var(--muted); margin-right:8px}
+.row .result{display:flex; flex-direction:column; gap:2px; margin-top:10px; padding:14px 0 0; border-top:1px solid var(--line); font-size:1.25rem; font-weight:700; letter-spacing:-.01em; font-variant-numeric:tabular-nums}
+.row .result::before{content:"결과"; font-family:var(--mono); font-weight:400; font-size:.8rem; color:var(--muted); letter-spacing:0}
 .row .tags{font-family:var(--mono); font-size:.82rem; color:var(--muted)}
-.row .pic{background:var(--panel-2); display:flex; align-items:center; justify-content:center; padding:28px; min-height:260px}
-.row .pic img{max-height:300px; width:auto; border-radius:4px; transition:transform .35s ease-out}
-.row:hover{background:var(--panel)}
-.row:hover .pic img{transform:scale(1.02)}
-@media (prefers-reduced-motion:reduce){.row,.row .pic img{transition:none}.row:hover .pic img{transform:none}}
+.row .more{margin-top:auto; padding-top:16px; font-family:var(--mono); font-size:.85rem; color:var(--muted); display:flex; align-items:center; gap:8px}
+.row .more::after{content:"→"; transition:transform .25s var(--ease-out)}
+.row .pic{background:var(--panel-2); display:flex; align-items:center; justify-content:center; padding:24px}
+.shot{width:100%; aspect-ratio:16 / 10; background:#FFFFFF; border-radius:6px; overflow:hidden; display:grid; place-items:center; box-shadow:0 1px 2px rgba(18,20,24,.06), 0 8px 24px -12px rgba(18,20,24,.18); transition:transform .35s var(--ease-out)}
+.shot img{width:100%; height:100%; object-fit:contain}
+.shot.fill img{object-fit:cover}
+.shot.nodo{background:#FCF7E9}
+.shot.draw{background:var(--bg); padding:18px 20px}
+@media (hover:hover) and (pointer:fine){
+  .row:hover{background:var(--panel)}
+  .row:hover .shot{transform:translateY(-3px)}
+  .row:hover .more{color:var(--fg)}
+  .row:hover .more::after{transform:translateX(4px)}
+}
+.row:active .shot{transform:scale(.99)}
+@media (prefers-reduced-motion:reduce){.row,.shot,.row .more::after{transition:none}.row:hover .shot,.row:hover .more::after{transform:none}}
 .pic-type{font-family:var(--display); font-weight:800; font-stretch:115%; font-size:clamp(2rem,4vw,3.2rem); letter-spacing:-.03em; line-height:1}
 @media (max-width:860px){
   .row{grid-template-columns:56px minmax(0,1fr)}
@@ -213,9 +249,9 @@ figcaption{font-size:.92rem; color:var(--muted); margin-top:10px}
 /* OCR 썸네일 */
 .mini-ocr{width:100%; max-width:520px; display:flex; flex-direction:column; gap:14px}
 .mini-bypass{height:18px; border:1px dashed var(--muted); border-bottom:0; margin-inline:9%; position:relative}
-.mini-bypass span{position:absolute; top:-.8em; left:50%; transform:translateX(-50%); background:var(--panel-2); padding:0 8px; font-family:var(--mono); font-size:.78rem; color:var(--muted); white-space:nowrap}
+.mini-bypass span{position:absolute; top:-.8em; left:50%; transform:translateX(-50%); background:var(--bg); padding:0 8px; font-family:var(--mono); font-size:.78rem; color:var(--muted); white-space:nowrap}
 .mini-row{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px}
-.mini-row span{border:1px solid var(--line); background:var(--bg); border-radius:3px; padding:10px 4px; text-align:center; font-size:.85rem; font-weight:700; display:flex; flex-direction:column; gap:2px}
+.mini-row span{border:1px solid var(--line); background:var(--panel); border-radius:3px; padding:10px 4px; text-align:center; font-size:.85rem; font-weight:700; display:flex; flex-direction:column; gap:2px}
 .mini-row span b{font-family:var(--display); font-size:.75rem; color:var(--muted); font-weight:600}
 .mini-row span.k{background:var(--invert); color:var(--on-invert); border-color:var(--invert)}
 .mini-row span.k b{color:inherit; opacity:.7}
@@ -255,8 +291,32 @@ td.up{font-weight:700}
 .contact .mail{font-family:var(--display); font-weight:800; font-stretch:105%; font-size:clamp(1.7rem,6vw,4.6rem); letter-spacing:-.035em; line-height:1.05; text-decoration:none; display:inline-block; margin-top:16px}
 .contact .mail:hover{text-decoration:underline; text-underline-offset:8px; text-decoration-thickness:2px}
 .foot{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; border-top:1px solid var(--line); margin-top:64px; padding-block:18px 40px}
-</style>
 
+/* v13: 모바일 OCR 썸네일 (위 .mini-* 규칙보다 뒤에 와야 함) */
+@media (max-width:860px){.shot.draw{aspect-ratio:auto; padding:22px 14px}.mini-row{gap:5px; grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,1.4fr)}.mini-row span{font-size:.7rem; padding:8px 0; overflow-wrap:normal; letter-spacing:-.02em}.mini-out{flex-wrap:wrap}.mini-out strong{white-space:nowrap}}
+
+/* v13: 스크롤 등장. JS가 있을 때만 숨겼다가 보이면 올라옴. 움직임 줄이기 설정이면 투명도만 바뀜 */
+.js .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s var(--ease-out), transform .6s var(--ease-out); transition-delay:var(--d,0ms)}
+.js .reveal.in{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){.js .reveal{transform:none; transition:opacity .3s ease}}
+
+/* 그 밖의 작업 */
+.others{display:grid; grid-template-columns:96px minmax(0,1fr); gap:0; padding-block:28px 32px; border-bottom:1px solid var(--line)}
+.others > .label{grid-column:1 / -1; margin-bottom:16px}
+.others ul{grid-column:2; list-style:none; margin:0; padding:0}
+.others li{display:grid; grid-template-columns:88px minmax(0,16rem) minmax(0,1fr); gap:6px 24px; align-items:baseline; padding-block:14px; border-top:1px solid var(--line)}
+.others li:first-child{border-top:0}
+.others .yr{font-family:var(--mono); font-size:.85rem; color:var(--muted); font-variant-numeric:tabular-nums}
+.others strong{font-size:1.08rem; font-weight:700; letter-spacing:-.01em}
+.others p{color:var(--muted); font-size:1rem}
+@media (max-width:860px){.others{grid-template-columns:56px minmax(0,1fr)}.others li{grid-template-columns:72px minmax(0,1fr)}.others li p{grid-column:2}}
+@media (max-width:480px){.others{grid-template-columns:minmax(0,1fr)}.others ul{grid-column:1}}
+</style>
+<script>if('IntersectionObserver' in window)document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<a class="skip-link" href="#work">본문으로 건너뛰기</a>
 <header class="bar">
   <div class="frame">
     <b>안채연</b>
@@ -283,48 +343,41 @@ td.up{font-weight:700}
   </section>
 
   <section id="work" class="frame" aria-labelledby="work-title">
-    <div class="sec-head"><h2 id="work-title">Selected Work</h2><span class="label">작업 6개<br>AI 직무 관련도 순</span></div>
+    <div class="sec-head"><h2 id="work-title">Selected Work</h2><span class="label">주요 작업 3개<br>그 밖의 작업 3개</span></div>
     <div class="rows">
-      <a class="row" href="#ora">
+      <a class="row reveal" style="--d:0ms" href="#ora">
         <span class="no">01</span>
-        <div class="txt"><h3>ORA 고령자 음성 AI 서비스</h3><p>전화로 대화하는 AI. 응답 구조와 프롬프트 설계</p><span class="tags">2025 / Whisper / RAG / BERT</span><span class="result">응답 4~6초 → 1~2초</span></div>
-        <div class="pic"><img src="img/ora_cover.webp" alt="ORA 소개 화면" width="1806" height="1018"></div>
+        <div class="txt"><h3>ORA 고령자 음성 AI 서비스</h3><p>전화로 대화하는 AI. 응답 구조와 프롬프트 설계</p><span class="tags">2025 / Whisper / RAG / BERT</span><span class="result">응답 4~6초 → 1~2초</span><span class="more" aria-hidden="true">자세히 보기</span></div>
+        <div class="pic"><div class="shot"><img src="img/ora_cover.webp" alt="ORA 소개 화면" width="1806" height="1018"></div></div>
       </a>
-      <a class="row" href="#ocr">
+      <a class="row reveal" style="--d:60ms" href="#ocr">
         <span class="no">02</span>
-        <div class="txt"><h3>심리검사지 OCR 자동화</h3><p>대학병원 손글씨 검사지를 텍스트 데이터로</p><span class="tags">2026 / Vision API / Gemini</span><span class="result">약 1,100건 중 약 91% 자동 처리</span></div>
-        <div class="pic"><div class="mini-ocr" role="img" aria-label="OCR 처리 5단계: PDF 변환, OCR, 줄 정렬, 문서 분류, Gemini 값 추출. 원본 이미지는 마지막 단계에 함께 전달. 약 1,100건 중 약 1,000건 처리">
+        <div class="txt"><h3>심리검사지 OCR 자동화</h3><p>대학병원 손글씨 검사지를 텍스트 데이터로</p><span class="tags">2026 / Vision API / Gemini</span><span class="result">약 1,100건 중 약 91% 자동 처리</span><span class="more" aria-hidden="true">자세히 보기</span></div>
+        <div class="pic"><div class="shot draw"><div class="mini-ocr" role="img" aria-label="OCR 처리 5단계: PDF 변환, OCR, 줄 정렬, 문서 분류, Gemini 값 추출. 원본 이미지는 마지막 단계에 함께 전달. 약 1,100건 중 약 1,000건 처리">
           <div class="mini-bypass"><span>원본 이미지 함께 전달</span></div>
           <div class="mini-row"><span><b>01</b>PDF</span><span><b>02</b>OCR</span><span><b>03</b>줄 정렬</span><span><b>04</b>분류</span><span class="k"><b>05</b>Gemini</span></div>
           <div class="mini-out"><strong>1,000 / 1,100</strong><span>검사지 자동 처리</span></div>
-        </div></div>
+        </div></div></div>
       </a>
-      <a class="row" href="#forgery">
+      <a class="row reveal" style="--d:120ms" href="#forgery">
         <span class="no">03</span>
-        <div class="txt"><h3>텍스트 위조 탐지 연구</h3><p>모듈 제거·결합 실험으로 탐지 모델 개선</p><span class="tags">2026 / DTD / FFDN / TTFN</span><span class="result">F1 0.806 → 0.846</span></div>
-        <div class="pic"><img src="img/forgery_model.webp" alt="실험 모델 구조도" width="1387" height="589"></div>
+        <div class="txt"><h3>텍스트 위조 탐지 연구</h3><p>모듈 제거·결합 실험으로 탐지 모델 개선</p><span class="tags">2026 / DTD / FFDN / TTFN</span><span class="result">F1 0.806 → 0.846</span><span class="more" aria-hidden="true">자세히 보기</span></div>
+        <div class="pic"><div class="shot"><img src="img/forgery_model.webp" alt="실험 모델 구조도" width="1387" height="589"></div></div>
       </a>
-      <a class="row" href="#opera">
-        <span class="no">04</span>
-        <div class="txt"><h3>쇼핑 행동 데이터 분석</h3><p>쾌락형과 실용형 쇼핑의 행동 차이 검증</p><span class="tags">2026 / Random Forest / SHAP</span><span class="result">가설 2개 통계·머신러닝 검증</span></div>
-        <div class="pic"><img src="img/opera.png" alt="OPeRA 데이터셋 구성도" width="1771" height="1048"></div>
-      </a>
-      <a class="row" href="#nodo">
-        <span class="no">05</span>
-        <div class="txt"><h3>NODO 강의 보조 프로그램</h3><p>기업 인턴. 기획, UI/UX 디자인, PM</p><span class="tags">2026 / 3인 팀 / 3주</span><span class="result">기한 내 완성, 회사 도입 검토</span></div>
-        <div class="pic"><img src="img/nodo_cover.png" alt="NODO 발표 표지" width="2407" height="1129"></div>
-      </a>
-      <a class="row" href="#nurspace">
-        <span class="no">06</span>
-        <div class="txt"><h3>Nurspace 간병인 매칭 웹</h3><p>해커톤. UI 디자인과 React 화면 구현</p><span class="tags">2024 / React / 6인 팀</span><span class="result">해커톤 시연 완료</span></div>
-        <div class="pic"><img src="img/nurspace.png" alt="Nurspace 메인 화면" width="2433" height="1353"></div>
-      </a>
+    </div>
+    <div class="others reveal">
+      <span class="label">others/ 그 밖의 작업</span>
+      <ul>
+        <li><span class="yr">2026.07</span><strong>NODO 강의 보조 프로그램</strong><p>기업 인턴. 기획, UI/UX 디자인, PM을 맡았고 회사 도입 검토까지 이어졌습니다. 개발은 팀원이 맡았습니다.</p></li>
+        <li><span class="yr">2026</span><strong>쇼핑 행동 데이터 분석</strong><p>수업 팀 프로젝트. 분석 방법 조사, 결과 해석, 발표를 맡았습니다.</p></li>
+        <li><span class="yr">2024</span><strong>Nurspace 간병인 매칭 웹</strong><p>해커톤. UI 디자인과 React 화면 구현을 맡았습니다.</p></li>
+      </ul>
     </div>
   </section>
 
   <div class="frame">
     <!-- 01 ORA -->
-    <article class="case" id="ora">
+    <article class="case reveal" id="ora">
       <aside class="case-side"><div class="in">
         <span class="no">case 01/</span>
         <h2>ORA</h2>
@@ -431,9 +484,9 @@ td.up{font-weight:700}
           </div>
         </div></div>
 
-        <div class="block"><span class="label">classify/</span><div>
-          <h4>대화 주제는 규칙과 BERT로 나눠 분류했습니다</h4>
-          <p>명확한 경우는 키워드·패턴 규칙으로 먼저 분류하고, 규칙으로 분류되지 않은 대화만 BERT 모델로 넘겼습니다.</p>
+        <div class="block"><span class="label">decision/</span><div>
+          <h4>만든 분류 모델을, 응답 속도를 위해 빼자고 제안했습니다</h4>
+          <p>RAG로 보낼 질문을 고르기 위해 BERT로 10개 안팎의 주제 분류 모델을 학습했습니다. 그런데 분류 단계가 하나 늘자 줄여 둔 응답 시간이 다시 길어졌고, 실제로 필요한 판단은 RAG와 LLM 두 갈래뿐이었습니다. 목적에 비해 과한 단계라고 보고 팀장과 함께 제외를 제안해, 서비스에는 넣지 않았습니다.</p>
         </div></div>
 
         <div class="block"><span class="label">result/</span><div>
@@ -444,7 +497,7 @@ td.up{font-weight:700}
     </article>
 
     <!-- 02 OCR -->
-    <article class="case" id="ocr">
+    <article class="case reveal" id="ocr">
       <aside class="case-side"><div class="in">
         <span class="no">case 02/</span>
         <h2>심리검사지 OCR 자동화</h2>
@@ -482,7 +535,7 @@ td.up{font-weight:700}
     </article>
 
     <!-- 03 위조 탐지 -->
-    <article class="case" id="forgery">
+    <article class="case reveal" id="forgery">
       <aside class="case-side"><div class="in">
         <span class="no">case 03/</span>
         <h2>텍스트 위조 탐지 연구</h2>
@@ -509,79 +562,6 @@ td.up{font-weight:700}
             </tbody>
           </table>
           <p class="muted">다른 데이터셋에서는 성능이 떨어져, 일반화 성능을 높이는 실험을 이어 가고 있습니다. 매주 랩미팅에서 진행 상황을 발표합니다.</p>
-        </div></div>
-      </div>
-    </article>
-
-    <!-- 04 OPeRA -->
-    <article class="case" id="opera">
-      <aside class="case-side"><div class="in">
-        <span class="no">case 04/</span>
-        <h2>쇼핑 행동 데이터 분석</h2>
-        <dl class="facts">
-          <div><dt class="label">기간</dt><dd>2026년</dd></div>
-          <div><dt class="label">수업</dt><dd>분산및병렬데이터분석 - 팀 프로젝트</dd></div>
-          <div><dt class="label">역할</dt><dd>선행 연구 조사<br>분석 방법 조사<br>결과 해석<br>발표 자료 제작과 발표</dd></div>
-          <div><dt class="label">방법</dt><dd>퍼널 분석, Random Forest, SHAP</dd></div>
-        </dl>
-      </div></aside>
-      <div class="case-body">
-        <div class="lead q"><strong>재미로 사는 쇼핑과 필요해서 사는 쇼핑은 행동이 다를까?</strong><span>아마존 실사용자 쇼핑 기록인 OPeRA 데이터셋으로 검증했습니다.</span></div>
-        <div class="block"><span class="label">hypothesis 1/</span><div>
-          <p>두 집단의 구매 단계별 전환율 차이는 통계적으로 유의하지 않았습니다. 표본 크기의 한계와, 두 집단이 실제로 비슷하게 행동할 가능성을 함께 검토했습니다.</p>
-        </div></div>
-        <div class="block"><span class="label">hypothesis 2/</span><div>
-          <p>세션 안의 행동 변수 19개로 Random Forest 분류 모델을 만들고, SHAP으로 예측에 영향이 큰 변수를 확인했습니다.</p>
-          <div class="pair">
-            <figure><img src="img/funnel.png" alt="두 집단의 단계별 전환율 비교 그래프" width="2524" height="1294" loading="lazy"><figcaption>가설 1. 단계별 전환율</figcaption></figure>
-            <figure><img src="img/shap.png" alt="SHAP Beeswarm Plot" width="2968" height="1579" loading="lazy"><figcaption>가설 2. SHAP 변수 영향력</figcaption></figure>
-          </div>
-        </div></div>
-      </div>
-    </article>
-
-    <!-- 05 NODO -->
-    <article class="case" id="nodo">
-      <aside class="case-side"><div class="in">
-        <span class="no">case 05/</span>
-        <h2>NODO</h2>
-        <dl class="facts">
-          <div><dt class="label">기간</dt><dd>2026년 7월 (3주)</dd></div>
-          <div><dt class="label">소속</dt><dd>아이코어이앤씨 하계 인턴 - 3인 팀</dd></div>
-          <div><dt class="label">역할</dt><dd>기획<br>UI/UX 디자인<br>PM<br>최종 발표</dd></div>
-        </dl>
-      </div></aside>
-      <div class="case-body">
-        <div class="lead q"><strong>강의 자료를 올리면 AI가 수업 로드맵을 만듭니다.</strong><span>학생은 익명으로 질문하며 실시간으로 진도를 따라갑니다.</span></div>
-        <div class="block"><span class="label">role/</span><div>
-          <ul>
-            <li>IT에 익숙하지 않은 강의자도 바로 쓸 수 있도록 화면을 최대한 단순하게 설계했습니다.</li>
-            <li>3주 안에 끝내기 위해 개발 팀원과 기능 우선순위를 조율해 범위를 정했습니다.</li>
-            <li>기술 스택 버전과 유지보수 비용을 문서로 정리해 회사에 넘겼습니다.</li>
-          </ul>
-          <figure><img src="img/nodo_features.png" alt="NODO 핵심 기능 화면" width="2400" height="1320" loading="lazy"><figcaption>핵심 기능: 권한 구분, 자료 업로드, AI 로드맵</figcaption></figure>
-        </div></div>
-        <div class="block"><span class="label">result/</span><div>
-          <p>기한 안에 완성해 발표했고, 회사에서 도입을 검토하게 되어 유지보수 문서를 함께 전달했습니다. 개발은 팀원이 맡았습니다.</p>
-        </div></div>
-      </div>
-    </article>
-
-    <!-- 06 Nurspace -->
-    <article class="case" id="nurspace">
-      <aside class="case-side"><div class="in">
-        <span class="no">case 06/</span>
-        <h2>Nurspace</h2>
-        <dl class="facts">
-          <div><dt class="label">기간</dt><dd>2024년</dd></div>
-          <div><dt class="label">소속</dt><dd>멋쟁이사자처럼 해커톤 - 6인 팀</dd></div>
-          <div><dt class="label">역할</dt><dd>UI/UX 디자인<br>React 프론트엔드</dd></div>
-        </dl>
-      </div></aside>
-      <div class="case-body">
-        <div class="block"><span class="label">summary/</span><div>
-          <p>환자가 직접 간병인을 찾고 프로필과 리뷰를 확인하는 중개 웹 서비스입니다. 전체 UI를 디자인하고 React로 메인·유저 화면과 검색, 필터, 프로필, 리뷰 기능을 구현했습니다. 해커톤에서 시연까지 마쳤습니다.</p>
-          <figure><img src="img/nurspace.png" alt="Nurspace 메인 화면" width="2433" height="1353" loading="lazy"></figure>
         </div></div>
       </div>
     </article>
@@ -612,7 +592,7 @@ td.up{font-weight:700}
           </ul>
         </div>
         <div><span class="label">tools/</span>
-          <div class="skills"><span>Python</span><span>Whisper</span><span>RAG</span><span>BERT</span><span>Gemini API</span><span>Google Vision API</span><span>Random Forest</span><span>SHAP</span><span>React</span></div>
+          <div class="skills"><span>Python</span><span>Whisper</span><span>RAG</span><span>BERT</span><span>Gemini API</span><span>Google Vision API</span></div>
         </div>
       </div>
     </div>
@@ -656,4 +636,35 @@ document.querySelectorAll('.copy').forEach(function (btn) {
     if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, fallback); } else { fallback(); }
   });
 });
+if ('IntersectionObserver' in window) {
+  // 등장: 한 번 보이면 끝. 끝난 뒤 reveal 클래스를 지워 원래 호버 전환이 지연 없이 돌아오게 함
+  var seen = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      el.classList.add('in');
+      seen.unobserve(el);
+      el.addEventListener('transitionend', function done(ev) {
+        if (ev.target !== el || ev.propertyName !== 'opacity') return;
+        el.classList.remove('reveal', 'in'); el.style.removeProperty('--d');
+        el.removeEventListener('transitionend', done);
+      });
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { seen.observe(el); });
+
+  // 메뉴에 지금 보고 있는 구역 표시
+  var links = {};
+  document.querySelectorAll('.bar nav a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  var where = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var id = e.target.id === 'about' || e.target.id === 'contact' ? e.target.id : 'work';
+      Object.keys(links).forEach(function (k) { if (k === id) links[k].setAttribute('aria-current', 'true'); else links[k].removeAttribute('aria-current'); });
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('#work, .case, #about, #contact').forEach(function (el) { where.observe(el); });
+}
 </script>
+</body>
+</html>
