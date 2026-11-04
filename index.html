@@ -2,625 +2,671 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
 <title>안채연 포트폴리오</title>
-<!-- v16 변경 이유: 멘토링("이력이 중구난방") 반영. v13 디자인 기준으로 상세 사례를 3개로 줄이고, BERT 서술을 서비스 미적용 결정으로 정정 -->
-<!-- v13 변경 이유:charset·viewport 누락 수정, 작업 목록 빈 공간·썸네일 통일, 히어로 위계 조정, 호버·등장 모션, 모바일 레이아웃 -->
-<meta name="description" content="AI 개발 포트폴리오. 고령자 음성 AI 서비스 ORA, 심리검사지 OCR 자동화, 텍스트 위조 탐지 연구 등 주요 작업 3개.">
+<!-- v25 변경 이유: 표지 Portfolio에 한 번만 재생되는 타이핑 효과 추가. 글자 자리를 미리 잡아 아래 내용이 밀리지 않음 -->
+<!-- v24 변경 이유: 본문의 세부 주석(한 일/안 한 일/예정) 삭제, ONNX 출력 차이를 10⁻⁸ 수준으로 표기. 구현 방식은 왼쪽 칸에만 둠 -->
+<!-- v23 변경 이유: 기본 글자색은 검정이라는 사용자 지시. 지정 색은 강조 수치, 큰 영문 단어, 구분선 등 강조 요소에만 사용 -->
+<!-- v22 변경 이유: 배경은 무조건 흰색, 지정 색은 글자와 강조에만 쓴다는 사용자 지시. 어두운 테마 제거, 면 채움을 선으로 교체 -->
+<!-- v21 변경 이유: 사용자 지정 색(1B365D, 005A9C, 60C1E5, A0E0EF) 적용, 줄어든 강조 수치를 다시 키움 -->
+<!-- v20 변경 이유: 빨간 강조가 눈에 부담된다는 피드백으로 먹색으로 교체, v17의 왼쪽 고정 정보 칸 복원. 상세: design/v19_수정목록.md -->
+<!-- v19 변경 이유: Figma Slides 덱(SHLAB·아이트럭)에서 다듬은 디자인과 내용을 웹에 반영. 연구·경량화·쇼핑 분석 내용 보강, 기계학습도구 실습 추가, 이메일 교체. 상세: design/v19_수정목록.md -->
+<meta name="description" content="안채연 AI 개발 포트폴리오. 텍스트 위변조 탐지 연구, 연구 모델 CPU 경량화, 손글씨 검사지 데이터화, 노인 대화 AI 서비스 ORA, 쇼핑 행동 데이터 분석.">
 <meta property="og:title" content="안채연 포트폴리오">
-<meta property="og:description" content="모델을 수치로 비교해 고르고, 서비스에 맞는 구조로 설계합니다.">
-<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0D0E10" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23121418'/%3E%3Cpath d='M38 16 26 48' stroke='%23F4F5F7' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta property="og:description" content="컴퓨터비전 연구실에서 모델 실험을 하고, 문서 데이터 처리와 음성 AI 서비스를 만들어 봤습니다.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23005A9C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
-/* Layout: 다크 에디토리얼. 가는 선으로 나눈 칸(그리드 블록) 위에 큰 영문 제목 + 한글 본문.
-   상단 3칸 정보줄 → 이름/한 문장 → 정보 3칸 → Selected Work(번호 칸 목록) → 사례(좌 정보 블록 | 우 본문) → About → Contact.
-   밝은/어두운 테마 모두 지원(기기 설정 + 전환 버튼). 색은 흑백만, 강조는 반전으로. */
+/* Layout: Figma 덱을 스크롤로 옮김. 큰 영문 구분 단어 + 짧은 먹색 막대, 그 아래 왼쪽 고정 정보 칸 | 오른쪽 한 메시지씩 쌓는 본문. 기본 글자 검정, 큰 영문 단어·선 남색, 강조 수치 파랑, 막대·비교 그래프 하늘색, 배경은 항상 흰색. */
 :root{
-  color-scheme:light;
-  --bg:#FFFFFF; --panel:#F4F5F7; --panel-2:#E9ECF0; --side:#E9ECF0; --line:#D3D8DE; --fg:#121418; --muted:#535B66; --ghost:#C9CED5; --invert:#121418; --on-invert:#F4F5F7; --meter:#98A0AA;
-  --display:'Archivo','Noto Sans KR',sans-serif;
+  --bg:#FFFFFF; --panel:#FFFFFF; --line:#D3E3EC; --fg:#000000; --head:#1B365D; --muted:#555555; --mark:#60C1E5; --rule:#60C1E5; --accent:#005A9C; --select:#A0E0EF; --on-ink:#FFFFFF; --shot:#FFFFFF;
+  --display:'Archivo','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
   --text:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-  --mono:'JetBrains Mono','Noto Sans KR',Consolas,monospace;
-  --ease-out:cubic-bezier(0.23,1,0.32,1);
+  --mono:'JetBrains Mono',Consolas,'Noto Sans KR',monospace;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0D0E10; --panel:#15171A; --panel-2:#1C1F23; --side:#15171A; --line:#2B2F35; --fg:#ECEDEF; --muted:#A3A9B1; --ghost:#3A3F46; --invert:#F2F3F4; --on-invert:#0D0E10; --meter:#7C838C; color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0D0E10; --panel:#15171A; --panel-2:#1C1F23; --side:#15171A; --line:#2B2F35; --fg:#ECEDEF; --muted:#A3A9B1; --ghost:#3A3F46; --invert:#F2F3F4; --on-invert:#0D0E10; --meter:#7C838C; color-scheme:dark}
+
 *{box-sizing:border-box}
-html{font-size:18px; scroll-behavior:smooth; scroll-padding-top:72px}
+html{font-size:18px; scroll-behavior:smooth; scroll-padding-top:76px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0; background:var(--bg); color:var(--fg); font-family:var(--text); line-height:1.75; word-break:keep-all; overflow-wrap:anywhere; -webkit-font-smoothing:antialiased}
+body{margin:0; background:var(--bg); color:var(--fg); font-family:var(--text); line-height:1.7; word-break:keep-all; overflow-wrap:anywhere; -webkit-font-smoothing:antialiased}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--bg)}
 h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0}
-h1,h2,h3,h4{line-height:1.3; text-wrap:balance}
+h1,h2,h3,h4{text-wrap:balance}
+ul{padding-left:1.15em}
 img{max-width:100%; height:auto; display:block}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--invert); outline-offset:3px}
-::selection{background:var(--invert); color:var(--on-invert)}
-
-.skip-link{position:absolute; left:16px; top:-60px; z-index:20; background:var(--invert); color:var(--on-invert); padding:10px 16px; border-radius:6px; text-decoration:none; transition:top .2s var(--ease-out)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+::selection{background:var(--select); color:var(--fg)}
+.wrap{max-width:1320px; margin-inline:auto; padding-left:max(clamp(16px,4vw,48px),env(safe-area-inset-left,0px)); padding-right:max(clamp(16px,4vw,48px),env(safe-area-inset-right,0px))}
+.skip-link{position:absolute; left:16px; top:-80px; z-index:20; background:var(--fg); color:var(--bg); padding:10px 16px; text-decoration:none}
 .skip-link:focus{top:12px}
-.frame{max-width:1280px; margin:0 auto; padding-inline:clamp(16px,3vw,32px)}
-.label{font-family:var(--mono); font-size:.85rem; color:var(--muted); letter-spacing:.01em}
+.note{font-size:.9rem; color:var(--muted); line-height:1.55}
+.tnum{font-variant-numeric:tabular-nums}
 
-/* 상단 바 */
+/* 상단 바: 덱 왼쪽 위 조각을 그대로 */
 .bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:var(--bg); border-bottom:1px solid var(--line)}
-.bar .frame{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; min-height:60px; gap:16px}
-.bar b{font-weight:700}
-.bar nav{display:flex; gap:clamp(12px,3vw,36px)}
-.bar nav a{text-decoration:none; font-size:.95rem; color:var(--muted); padding-block:10px; position:relative; transition:color .2s ease}
-.bar nav a::after{content:""; position:absolute; left:0; right:0; bottom:4px; height:2px; background:var(--fg); transform:scaleX(0); transform-origin:left; transition:transform .25s var(--ease-out)}
+.bar::before{content:""; position:absolute; left:0; top:0; width:clamp(40px,6vw,120px); height:4px; background:var(--rule)}
+.bar .wrap{display:flex; justify-content:space-between; align-items:center; gap:16px; min-height:60px}
+.bar b{font-weight:900; letter-spacing:-.02em; white-space:nowrap}
+.bar nav{display:flex; gap:clamp(12px,2.6vw,32px); margin-left:auto}
+.bar nav a{text-decoration:none; font-size:.92rem; color:var(--muted); padding-block:10px; transition:color .2s ease}
 .bar nav a:hover,.bar nav a[aria-current="true"]{color:var(--fg)}
-.bar nav a[aria-current="true"]::after{transform:scaleX(1)}
-.bar-end{justify-self:end; display:flex; align-items:center; gap:16px}
-.theme{font:inherit; font-size:.85rem; color:var(--fg); background:transparent; border:1px solid var(--line); border-radius:999px; padding:6px 14px; min-height:40px; cursor:pointer; transition:border-color .2s ease, transform .16s var(--ease-out)}
-.theme:hover{border-color:var(--muted)}
-.theme:active,.copy:active{transform:scale(.97)}
-@media (max-width:640px){.bar .frame{grid-template-columns:auto 1fr auto; gap:10px}.bar .label{display:none}.bar nav{justify-self:end; gap:14px}.bar nav a{font-size:.85rem; white-space:nowrap}.theme{padding:6px 10px; font-size:.78rem; white-space:nowrap}}
-@media (max-width:380px){.bar nav{display:none}.bar .frame{grid-template-columns:1fr auto}}
+.btn{font:inherit; font-size:.85rem; color:var(--fg); background:transparent; border:1px solid var(--line); padding:7px 12px; min-height:40px; cursor:pointer; white-space:nowrap; transition:border-color .2s ease}
+.btn:hover{border-color:var(--muted)}
+@media (max-width:560px){.bar nav{gap:12px}.bar nav a{font-size:.82rem}.btn{font-size:.76rem; padding:6px 8px}.bar b{display:none}}
 
-/* 히어로 */
-.hero{border-bottom:1px solid var(--line)}
-.hero-top{display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1px solid var(--line)}
-.hero-top span{padding:14px 0}
-.hero-top span:nth-child(2){text-align:center}
-.hero-top span:nth-child(3){text-align:right}
-@media (max-width:480px){.hero-top{grid-template-columns:1fr 1fr}.hero-top span:nth-child(2){display:none}.hero-top span{white-space:nowrap}}
-/* v13: 이름과 한 문장이 먼저 보이도록 "Portfolio"는 옅은 배경 글자로 낮춤 */
-.hero-word{font-family:var(--display); font-weight:800; font-stretch:125%; font-size:clamp(2.8rem,10.5vw,9.6rem); line-height:.86; letter-spacing:-.045em; padding-block:clamp(24px,4vw,44px) 0; color:var(--ghost); user-select:none}
-.hero-main{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:clamp(24px,5vw,64px); padding-block:clamp(28px,4vw,48px) clamp(40px,6vw,72px); align-items:end}
-.hero-main h1{font-size:clamp(3.2rem,8vw,6.6rem); font-weight:900; letter-spacing:-.04em; line-height:.95}
-.hero-main h1 small{display:block; font-size:1.05rem; font-weight:500; color:var(--muted); letter-spacing:0; margin-top:18px; line-height:1.5}
-.hero-main p{font-size:clamp(1.35rem,2.6vw,1.95rem); line-height:1.45; font-weight:700; letter-spacing:-.02em; max-width:22em}
-@media (max-width:760px){.hero-main{grid-template-columns:1fr}}
-.info{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line)}
-.info > div{padding:22px 24px 26px 0; display:flex; flex-direction:column; gap:6px}
-.info > div + div{padding-left:24px; border-left:1px solid var(--line)}
-.info dd{font-size:1.02rem}
-@media (max-width:760px){.info{grid-template-columns:1fr}.info > div + div{padding-left:0; border-left:0; border-top:1px solid var(--line)}}
-.copy{font:inherit; font-size:.9rem; color:var(--on-invert); background:var(--invert); border:0; border-radius:999px; padding:8px 16px; min-height:40px; cursor:pointer; align-self:flex-start; margin-top:6px; transition:transform .16s var(--ease-out), opacity .2s ease}
-@media (hover:hover) and (pointer:fine){.copy:hover{opacity:.86}}
+/* 표지 */
+.cover{padding-block:clamp(40px,7vw,88px) clamp(48px,7vw,88px)}
+.cover .tag{display:flex; justify-content:space-between; gap:16px; color:var(--muted); font-size:.9rem}
+.word{font-family:var(--display); font-weight:800; font-size:clamp(3.5rem,17.5vw,14.5rem); line-height:1; letter-spacing:-.04em; color:var(--head); overflow-wrap:normal; word-break:normal}
+.cover .word{margin-top:clamp(20px,4vw,40px)}
+.rule{display:block; width:clamp(72px,8vw,120px); height:8px; background:var(--rule); border:0; margin:0}
+.cover .rule{margin-top:clamp(24px,4vw,44px)}
+.cover h1{color:var(--head); font-size:clamp(2.4rem,5.4vw,4rem); font-weight:900; letter-spacing:-.03em; line-height:1.2; margin-top:clamp(20px,3vw,32px)}
+.cover .aff{font-size:clamp(1.05rem,1.9vw,1.35rem); color:var(--muted); margin-top:8px}
+.cover .intro{font-size:clamp(1.15rem,2.1vw,1.5rem); line-height:1.6; font-weight:500; max-width:38em; text-wrap:pretty; margin-top:clamp(24px,3vw,36px)}
+.mailrow{display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-top:clamp(20px,3vw,32px)}
+.mail{font-size:clamp(1.05rem,2vw,1.4rem); font-weight:700; color:var(--accent); user-select:all}
 
-/* 섹션 제목 */
-.sec-head{display:flex; justify-content:space-between; align-items:end; gap:24px; padding-block:clamp(64px,10vw,120px) 24px; border-bottom:1px solid var(--line)}
-.sec-head h2{font-family:var(--display); font-weight:800; font-stretch:112%; font-size:clamp(2.6rem,8vw,6.2rem); letter-spacing:-.04em; line-height:.9}
-.sec-head h2{overflow-wrap:normal}
-.sec-head .label{text-align:right; flex:none}
-@media (max-width:560px){.sec-head{flex-direction:column; align-items:flex-start; gap:12px}.sec-head .label{text-align:left}}
+/* 작업 목록 */
+.index{border-top:2px solid var(--head)}
+.idx{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:6px 32px; align-items:baseline; padding-block:22px; border-bottom:1px solid var(--line); text-decoration:none; transition:background-color .2s ease}
+.idx h3{transition:color .2s ease; font-size:clamp(1.15rem,2vw,1.45rem); font-weight:700; letter-spacing:-.02em; line-height:1.4}
+.idx small{display:block; font-size:.88rem; font-weight:400; color:var(--muted); letter-spacing:0; margin-top:2px}
+.idx strong{font-family:var(--display); font-weight:800; font-size:clamp(1.4rem,2.8vw,2.3rem); letter-spacing:-.02em; color:var(--accent); line-height:1.2; text-align:right; font-variant-numeric:tabular-nums}
+.idx strong.ko{font-family:var(--text); font-weight:900}
+@media (hover:hover) and (pointer:fine){.idx:hover h3{color:var(--accent)}}
+@media (max-width:640px){.idx{grid-template-columns:minmax(0,1fr)}.idx strong{text-align:left}}
 
-/* 작업 목록: 번호 칸 */
-.rows{border-bottom:1px solid var(--line)}
-/* v13: 썸네일은 같은 비율(16:10)의 흰 판 안에 맞춤. 결과는 설명 바로 아래로 올리고, 남는 아래쪽은 "자세히" 표시로 채움 */
-.row{display:grid; grid-template-columns:96px minmax(0,1fr) minmax(0,.92fr); text-decoration:none; border-top:1px solid var(--line); transition:background-color .2s ease}
-.row:first-child{border-top:0}
-.row > *{padding:28px 28px}
-.row > * + *{border-left:1px solid var(--line)}
-.row .no{font-family:var(--display); font-weight:700; font-stretch:110%; font-size:1.6rem; color:var(--muted); padding-left:0}
-.row .txt{display:flex; flex-direction:column; gap:10px}
-.row h3{font-size:1.55rem; font-weight:700; letter-spacing:-.02em}
-.row .txt p{color:var(--muted); font-size:1.02rem}
-.row .result{display:flex; flex-direction:column; gap:2px; margin-top:10px; padding:14px 0 0; border-top:1px solid var(--line); font-size:1.25rem; font-weight:700; letter-spacing:-.01em; font-variant-numeric:tabular-nums}
-.row .result::before{content:"결과"; font-family:var(--mono); font-weight:400; font-size:.8rem; color:var(--muted); letter-spacing:0}
-.row .tags{font-family:var(--mono); font-size:.82rem; color:var(--muted)}
-.row .more{margin-top:auto; padding-top:16px; font-family:var(--mono); font-size:.85rem; color:var(--muted); display:flex; align-items:center; gap:8px}
-.row .more::after{content:"→"; transition:transform .25s var(--ease-out)}
-.row .pic{background:var(--panel-2); display:flex; align-items:center; justify-content:center; padding:24px}
-.shot{width:100%; aspect-ratio:16 / 10; background:#FFFFFF; border-radius:6px; overflow:hidden; display:grid; place-items:center; box-shadow:0 1px 2px rgba(18,20,24,.06), 0 8px 24px -12px rgba(18,20,24,.18); transition:transform .35s var(--ease-out)}
-.shot img{width:100%; height:100%; object-fit:contain}
-.shot.fill img{object-fit:cover}
-.shot.nodo{background:#FCF7E9}
-.shot.draw{background:var(--bg); padding:18px 20px}
-@media (hover:hover) and (pointer:fine){
-  .row:hover{background:var(--panel)}
-  .row:hover .shot{transform:translateY(-3px)}
-  .row:hover .more{color:var(--fg)}
-  .row:hover .more::after{transform:translateX(4px)}
-}
-.row:active .shot{transform:scale(.99)}
-@media (prefers-reduced-motion:reduce){.row,.shot,.row .more::after{transition:none}.row:hover .shot,.row:hover .more::after{transform:none}}
-.pic-type{font-family:var(--display); font-weight:800; font-stretch:115%; font-size:clamp(2rem,4vw,3.2rem); letter-spacing:-.03em; line-height:1}
-@media (max-width:860px){
-  .row{grid-template-columns:56px minmax(0,1fr)}
-  .row .pic{grid-column:1 / -1; border-left:0; border-top:1px solid var(--line); min-height:200px}
-  .row > *{padding:22px 18px}
-  .row .no{font-size:1.2rem}
+/* 구분 장 */
+.divider{padding-block:clamp(72px,12vw,160px) clamp(24px,4vw,48px)}
+.divider .rule{margin-top:clamp(20px,3vw,36px)}
+.divider h2{font-size:clamp(1.7rem,4vw,3rem); font-weight:900; letter-spacing:-.03em; line-height:1.25; margin-top:clamp(18px,2.4vw,28px)}
+.divider p:not(.word){font-size:clamp(1rem,1.7vw,1.2rem); color:var(--muted); margin-top:6px}
+
+/* 한 메시지 */
+.msg{padding-block:clamp(36px,5vw,64px); border-top:1px solid var(--line); display:flex; flex-direction:column; gap:clamp(20px,2.6vw,30px); min-width:0}
+.msg h3{font-size:clamp(1.5rem,3.1vw,2.35rem); font-weight:900; letter-spacing:-.03em; line-height:1.3; max-width:24em}
+.msg > p,.msg > ul,.prose{font-size:clamp(1rem,1.5vw,1.14rem); max-width:44em}
+.prose{display:flex; flex-direction:column; gap:10px}
+.lab{font-size:.92rem; font-weight:700; color:var(--muted); display:block; margin-bottom:6px}
+.arrow{font-weight:700; font-size:clamp(1rem,1.5vw,1.14rem)}
+.arrow::before{content:"→ "; color:var(--accent)}
+
+/* 왼쪽 고정 정보 칸 (v17 복원) */
+.case{display:grid; grid-template-columns:minmax(250px,310px) minmax(0,1fr); border-top:2px solid var(--head)}
+.side{border-right:1px solid var(--line); min-width:0}
+.side .in{position:sticky; top:calc(61px + env(safe-area-inset-top,0px)); max-height:calc(100vh - 61px); overflow-y:auto; padding:clamp(22px,2.4vw,32px) clamp(18px,2vw,28px) 32px 0; display:flex; flex-direction:column; gap:20px}
+.side h2{font-size:clamp(1.35rem,2vw,1.7rem); font-weight:900; letter-spacing:-.03em; line-height:1.3}
+.facts > div{padding-block:11px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:1px}
+.facts dt{font-size:.82rem; color:var(--muted)}
+.facts dd{font-size:.95rem; line-height:1.55}
+.case .body{min-width:0; padding-left:clamp(24px,3.4vw,56px)}
+.case .body > .msg:first-child{border-top:0}
+.case .msg h3{font-size:clamp(1.45rem,2.5vw,2.1rem)}
+@media (max-width:980px){
+  .case{grid-template-columns:minmax(0,1fr)}
+  .side{border-right:0; border-bottom:1px solid var(--line)}
+  .side .in{position:static; max-height:none; padding-right:0}
+  .case .body{padding-left:0}
 }
 
-/* 사례 */
-.case{display:grid; grid-template-columns:minmax(260px,360px) minmax(0,1fr); border:1px solid var(--line); margin-top:40px}
-.case-side{background:var(--side); border-right:1px solid var(--line)}
-.case-side .in{position:sticky; top:84px; padding:36px 32px 40px; display:flex; flex-direction:column; gap:28px}
-.case-side .no{font-family:var(--mono); font-size:.85rem; color:var(--muted)}
-.case-side h2{font-family:var(--display); font-size:clamp(2rem,3.4vw,2.8rem); font-weight:800; font-stretch:105%; letter-spacing:-.03em; line-height:1.05}
-.facts{display:grid; gap:0; border-top:1px solid var(--line)}
-.facts > div{padding-block:14px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:2px}
-.facts dd{font-size:1rem}
-.case-body{padding:clamp(28px,4vw,56px); display:flex; flex-direction:column; gap:48px; min-width:0}
-@media (max-width:900px){
-  .case{grid-template-columns:1fr}
-  .case-side{border-right:0; border-bottom:1px solid var(--line)}
-  .case-side .in{position:static; padding:28px 20px}
-  .case-body{padding:28px 20px}
-}
-.lead{display:flex; flex-direction:column; gap:10px; padding-bottom:40px; border-bottom:1px solid var(--line)}
-.lead strong{font-family:var(--display); font-weight:800; font-stretch:110%; font-size:clamp(2.4rem,5vw,4rem); letter-spacing:-.04em; line-height:1.05; font-variant-numeric:tabular-nums}
-.lead.q strong{font-family:var(--text); font-stretch:normal; font-size:clamp(1.6rem,3.2vw,2.4rem); font-weight:700; letter-spacing:-.02em; line-height:1.35}
-.lead span{color:var(--muted); font-size:1.05rem}
-.block{display:grid; grid-template-columns:minmax(0,1fr); gap:12px}
-.block > .label{padding-bottom:10px; border-bottom:1px solid var(--line)}
-.block > div{display:flex; flex-direction:column; gap:14px; min-width:0}
-.block h4{font-size:1.15rem; font-weight:700; margin-top:10px}
-.block h4:first-child{margin-top:0}
-.block p,.block li{font-size:1.05rem}
-.block ul,.block ol{padding-left:1.2em; display:flex; flex-direction:column; gap:8px}
-.block li::marker{color:var(--muted)}
-.muted{color:var(--muted)}
+/* 단계 칩 */
+.chips{display:grid; grid-template-columns:repeat(var(--n,4),minmax(0,1fr)); gap:clamp(12px,3vw,40px)}
+.chip{position:relative; display:flex; flex-direction:column; gap:10px; min-width:0}
+.chip b{display:flex; align-items:center; justify-content:center; text-align:center; min-height:64px; padding:10px 12px; border:2px solid var(--head); border-radius:999px; font-size:clamp(.95rem,1.55vw,1.14rem); font-weight:700; line-height:1.3}
+.chip.on b{border-color:var(--accent); color:var(--accent)}
+.chip.todo b{border:2px dashed var(--mark); color:var(--muted); font-weight:500}
+.chip span{font-size:.92rem; color:var(--muted); text-align:center; line-height:1.5}
+.chip + .chip::before{content:"→"; position:absolute; left:calc(-1 * clamp(12px,3vw,40px)); width:clamp(12px,3vw,40px); top:20px; text-align:center; color:var(--muted)}
+@media (max-width:760px){.chips{grid-template-columns:minmax(0,1fr)}.chip b{min-height:52px}.chip + .chip::before{content:"↓"; position:static; width:auto; display:block; order:-1; margin-block:-6px -2px}}
 
-figure img{border-radius:4px; background:#FFFFFF}
-figure a.zoom{display:block; cursor:zoom-in}
-figure a.zoom:focus-visible{outline-offset:-3px}
-figcaption{font-size:.92rem; color:var(--muted); margin-top:10px}
-.pair{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr)); gap:16px}
+/* 큰 수치 */
+.big{font-family:var(--display); font-weight:800; color:var(--accent); font-size:clamp(2.4rem,6.6vw,5.6rem); letter-spacing:-.035em; line-height:1.05; font-variant-numeric:tabular-nums}
+.big.ko{font-family:var(--text); font-weight:900; color:var(--head)}
+.big.ink{color:var(--head)}
+.figs{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr)); gap:28px clamp(16px,2.4vw,32px)}
+.fig{border-top:2px solid var(--head); padding-top:14px; display:flex; flex-direction:column; gap:6px; min-width:0}
+.fig > b{font-weight:700}
+.fig > span{font-size:1rem}
+.fig > small{font-size:.9rem; color:var(--muted)}
+.fig .big{font-size:clamp(2.6rem,4.9vw,4.2rem); white-space:nowrap}
 
-/* 도식 공통 */
-.diagram{border:1px solid var(--line); background:var(--panel); padding:clamp(18px,3vw,28px); display:flex; flex-direction:column; gap:18px}
-.diagram > .label{display:flex; justify-content:space-between; gap:12px}
-.node{border:1px solid var(--line); background:var(--bg); padding:10px 14px; font-size:.98rem; font-weight:500; text-align:center; border-radius:3px}
-.node.hi{background:var(--invert); color:var(--on-invert); border-color:var(--invert); font-weight:700}
-.data{font-family:var(--mono); font-size:.82rem; color:var(--muted); text-align:center}
-.down{width:1px; height:22px; background:var(--muted); margin:0 auto; position:relative}
-.down::after{content:""; position:absolute; bottom:-1px; left:-4px; border:4px solid transparent; border-top:6px solid var(--muted); border-bottom:0}
+.box{border:1px solid var(--line); padding:clamp(16px,2.2vw,24px); font-size:clamp(.98rem,1.45vw,1.08rem); min-width:0}
+.box > b{display:block; margin-bottom:6px}
+.split{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(16px,3vw,40px)}
+.split.stat{grid-template-columns:minmax(0,1fr); gap:20px}
+@media (max-width:760px){.split{grid-template-columns:minmax(0,1fr)}}
+.three{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(14px,2.4vw,32px)}
+@media (max-width:760px){.three{grid-template-columns:minmax(0,1fr)}}
+.tile{border-top:2px solid var(--head); padding-top:12px; display:flex; flex-direction:column; gap:6px; min-width:0}
+.tile b{font-size:1.14rem}
+.tile p{font-size:1rem}
+.tile small{font-size:.9rem; color:var(--muted); font-family:var(--mono); line-height:1.6}
 
-/* 프롬프트 구조: 가로 단계 */
-.steps{display:grid; grid-template-columns:repeat(var(--n),minmax(0,1fr)); gap:0 28px}
-.step{display:flex; flex-direction:column; gap:10px; position:relative}
-.step + .step::before{content:"→"; position:absolute; left:-22px; top:9px; color:var(--muted); font-size:1rem}
-.step .down{height:16px}
-.step > .node{min-height:3.8em; display:grid; place-items:center}
-.merge{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 28px}
-.merge i{grid-column:2 / 4; height:22px; border:1px solid var(--muted); border-top:0; margin-inline:25%; position:relative; display:block}
-.merge i::after{content:""; position:absolute; left:50%; bottom:-23px; width:1px; height:22px; background:var(--muted)}
-.chain{display:flex; flex-direction:column; align-items:center; gap:0; margin-top:22px}
-.chain-wrap{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 28px}
-.chain-wrap .chain{grid-column:2 / 4}
-.chain .node{min-width:min(280px,100%)}
-.chain .node small{display:block; font-weight:400; font-size:.85rem; opacity:.75}
-@media (max-width:700px){
-  .steps{grid-template-columns:1fr; gap:6px}
-  .step + .step::before{content:"↓"; position:static; text-align:center}
-  .merge{display:none}
-  .chain-wrap{grid-template-columns:1fr}
-  .chain-wrap .chain{grid-column:1; margin-top:8px}
-  .chain-wrap .chain::before{content:"senior_info + rag_results"; font-family:var(--mono); font-size:.82rem; color:var(--muted); margin-bottom:6px}
-}
+figure img{background:var(--shot)}
+figcaption{font-size:.9rem; color:var(--muted); margin-top:10px}
+a.zoom{display:block; cursor:zoom-in}
 
-/* 4-Layer 도식 */
-.bubble{align-self:flex-start; border:1px solid var(--line); background:var(--bg); padding:12px 18px; border-radius:16px 16px 16px 4px; font-size:1.05rem}
-.bubble.out{align-self:flex-end; background:var(--invert); color:var(--on-invert); border-color:var(--invert); border-radius:16px 16px 4px 16px; font-weight:500}
-.bubble .label{display:block; color:inherit; opacity:.7; margin-bottom:2px}
-.stack{border:1px solid var(--line); display:flex; flex-direction:column}
-.layer{display:grid; grid-template-columns:200px minmax(0,1fr); background:var(--bg)}
-.layer + .layer{border-top:1px solid var(--line)}
-.layer-name{padding:16px 18px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:2px; background:var(--panel-2)}
-.layer-name b{font-family:var(--display); font-stretch:110%; font-size:1.2rem; font-weight:800}
-.layer-name span{font-size:.92rem}
-.layer-name em{font-style:normal; font-size:.82rem; color:var(--muted); font-family:var(--mono)}
-.layer-do{padding:16px 20px; display:flex; flex-direction:column; justify-content:center; gap:8px}
-.layer-do .sub{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
-.layer-do .sub div{border:1px solid var(--line); padding:8px 10px; font-size:.95rem; border-radius:3px}
-.layer-do .sub div .label{display:block}
-.layer.skip .layer-do{color:var(--muted)}
-.checks{list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:8px 20px}
-.checks li{display:flex; gap:8px; align-items:center; font-size:.98rem}
-.checks li::before{content:"✓"; display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:var(--invert); color:var(--on-invert); font-size:.75rem; font-weight:700}
-@media (max-width:760px){
-  .layer{grid-template-columns:1fr}
-  .layer-name{border-right:0; border-bottom:1px solid var(--line)}
-  .layer-do .sub{grid-template-columns:1fr}
-}
+table{border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums}
+th,td{text-align:left; padding:10px 0; border-bottom:1px solid var(--line)}
+th{font-weight:500; font-size:.88rem; color:var(--muted)}
+td.up{font-weight:700; color:var(--accent)}
+.narrow{max-width:520px}
 
-/* OCR 로직도 */
-.ocr-flow{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:0 22px}
-.ocr-bypass{grid-column:1 / -1; height:24px; border:1px dashed var(--muted); border-bottom:0; margin:14px 10% 0; position:relative}
-.ocr-bypass span{position:absolute; top:-.85em; left:50%; transform:translateX(-50%); background:var(--panel); padding:0 10px; font-family:var(--mono); font-size:.8rem; color:var(--muted); white-space:nowrap}
-.ostep{display:flex; flex-direction:column; gap:10px; position:relative; min-width:0}
-.ostep + .ostep::before{content:"→"; position:absolute; left:-18px; top:1.5em; color:var(--muted)}
-.ostep .node{min-height:5.2em; display:flex; flex-direction:column; justify-content:center; gap:2px; text-align:left; padding:12px 14px}
-.ostep .node b{font-family:var(--display); font-weight:700; font-size:.8rem; color:var(--muted)}
-.ostep .node strong{font-size:1rem; font-weight:700}
-.ostep .tool{font-family:var(--mono); font-size:.8rem; color:var(--muted)}
-.ostep p{font-size:.92rem; line-height:1.55}
-.ostep.key .node{background:var(--invert); color:var(--on-invert); border-color:var(--invert)}
-.ostep.key .node b{color:inherit; opacity:.7}
-.ocr-out{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:8px 24px; border-top:1px solid var(--line); padding-top:16px}
-.ocr-out strong{font-family:var(--display); font-weight:800; font-stretch:110%; font-size:1.6rem; letter-spacing:-.02em}
-.ocr-out span{color:var(--muted); font-size:.95rem}
-.mobile-note{display:none}
-@media (max-width:760px){
-  .ocr-flow{grid-template-columns:1fr; gap:6px}
-  .ocr-bypass{display:none}
-  .ostep + .ostep::before{content:"↓"; position:static; text-align:center}
-  .ostep .node{min-height:0}
-  .mobile-note{display:block}
-}
+/* 코드 */
+pre{margin:0; font-family:var(--mono); font-size:.92rem; line-height:1.7; border:1px solid var(--line); padding:16px 18px; overflow-x:auto; word-break:normal; overflow-wrap:normal}
+pre mark{background:transparent; color:var(--accent); font-weight:500}
 
-/* OCR 썸네일 */
-.mini-ocr{width:100%; max-width:520px; display:flex; flex-direction:column; gap:14px}
-.mini-bypass{height:18px; border:1px dashed var(--muted); border-bottom:0; margin-inline:9%; position:relative}
-.mini-bypass span{position:absolute; top:-.8em; left:50%; transform:translateX(-50%); background:var(--bg); padding:0 8px; font-family:var(--mono); font-size:.78rem; color:var(--muted); white-space:nowrap}
-.mini-row{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px}
-.mini-row span{border:1px solid var(--line); background:var(--panel); border-radius:3px; padding:10px 4px; text-align:center; font-size:.85rem; font-weight:700; display:flex; flex-direction:column; gap:2px}
-.mini-row span b{font-family:var(--display); font-size:.75rem; color:var(--muted); font-weight:600}
-.mini-row span.k{background:var(--invert); color:var(--on-invert); border-color:var(--invert)}
-.mini-row span.k b{color:inherit; opacity:.7}
-.mini-out{display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid var(--line); padding-top:12px; gap:12px}
-.mini-out strong{font-family:var(--display); font-weight:800; font-stretch:110%; font-size:clamp(1.4rem,3vw,2rem); letter-spacing:-.02em}
-.mini-out span{font-size:.85rem; color:var(--muted)}
+/* 원인 목록 */
+.checks{list-style:none; padding:0; display:flex; flex-direction:column}
+.checks li{display:grid; grid-template-columns:1.5em minmax(0,1fr); gap:8px; padding-block:9px; border-bottom:1px solid var(--line)}
+.checks li::before{content:"✕"; color:var(--muted)}
+.checks li.hit{font-weight:700}
+.checks li.hit::before{content:"✓"; color:var(--accent); font-weight:900}
 
-/* 막대 */
-.bars{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr)); gap:18px 36px}
-.bars figcaption{grid-column:1 / -1}
-.meter{display:grid; grid-template-columns:3.4em minmax(0,1fr) 3.4em; gap:12px; align-items:center; padding-block:4px}
-.bar-track{height:8px; background:var(--panel-2); border-radius:4px; overflow:hidden}
-.bar-fill{display:block; height:100%; width:calc(var(--v) / 1.35 * 100%); background:var(--meter); border-radius:4px}
-.meter.best .bar-fill{background:var(--invert)}
-.meter.best span:not(.bar-track){font-weight:700}
-.bar-val{text-align:right; font-variant-numeric:tabular-nums}
+/* 가로 막대 */
+.hb{display:grid; grid-template-columns:minmax(0,11em) minmax(0,1fr); gap:10px 16px; align-items:center}
+.hb .track{display:flex; align-items:center; gap:10px; min-width:0}
+.hb i{display:block; height:26px; width:calc(var(--v) * var(--full,82%)); background:var(--mark); flex:none}
+.hb .hi i{background:var(--accent)}
+.hb .hi b{color:var(--accent)}
+.hb b{font-variant-numeric:tabular-nums; white-space:nowrap}
+.hb span.name{font-size:.98rem}
+@media (max-width:560px){.hb{grid-template-columns:minmax(0,1fr)}.hb span.name{margin-bottom:-6px}}
+.hb.thin i{height:10px}
+.pair{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px clamp(24px,4vw,56px)}
+.pair .hb{grid-template-columns:3.2em minmax(0,1fr)}
+@media (max-width:760px){.pair{grid-template-columns:minmax(0,1fr)}}
 
-table{border-collapse:collapse; width:100%; font-size:1.02rem; font-variant-numeric:tabular-nums}
-th,td{text-align:left; padding:12px 0; border-bottom:1px solid var(--line)}
-th{font-family:var(--mono); font-weight:400; color:var(--muted); font-size:.82rem}
-td.up{font-weight:700}
+/* 퍼널 */
+.fun{display:grid; grid-template-columns:7.5em minmax(0,1fr) 8.5em; gap:16px; align-items:center; padding-block:12px; border-bottom:1px solid var(--line)}
+.fun.head{font-size:.88rem; color:var(--muted); padding-block:0 8px}
+.fun .st{font-weight:700}
+.fun .two{display:flex; flex-direction:column; gap:4px; min-width:0}
+.fun .ln{display:flex; align-items:center; gap:10px}
+.fun i{display:block; height:20px; width:calc(var(--v) * .82%); background:var(--mark); flex:none}
+.fun .a i{background:var(--accent)}
+.fun .a b{color:var(--accent)}
+.fun .ln b{font-size:.92rem; font-variant-numeric:tabular-nums}
+.fun .pv{text-align:right; font-weight:700; font-variant-numeric:tabular-nums}
+.fun .pv.hi{color:var(--accent)}
+.key{display:inline-flex; align-items:center; gap:6px; margin-right:14px}
+.key::before{content:""; width:12px; height:12px; background:var(--mark)}
+.key.a{color:var(--accent); font-weight:700}
+.key.a::before{background:var(--accent)}
+@media (max-width:640px){.fun{grid-template-columns:minmax(0,1fr) auto}.fun .two{grid-column:1 / -1; grid-row:2}.fun.head span:nth-child(2){display:none}}
 
-/* About */
-.about-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.4fr); border-bottom:1px solid var(--line)}
-.about-grid > *{padding-block:40px}
-.about-grid > p{padding-right:clamp(20px,4vw,56px); font-size:clamp(1.2rem,2vw,1.45rem); line-height:1.6; font-weight:500}
-.about-grid > div{border-left:1px solid var(--line); padding-left:clamp(20px,4vw,56px); display:flex; flex-direction:column; gap:40px}
-@media (max-width:860px){.about-grid{grid-template-columns:1fr}.about-grid > div{border-left:0; padding-left:0; border-top:1px solid var(--line)}}
-.hist ul{list-style:none; padding:0; margin-top:10px}
-.hist li{display:grid; grid-template-columns:7em minmax(0,1fr); gap:16px; padding-block:12px; border-bottom:1px solid var(--line); font-size:1.02rem}
-.hist li span{font-family:var(--mono); font-size:.85rem; color:var(--muted); padding-top:3px}
-.skills{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
-.skills span{border:1px solid var(--line); border-radius:999px; padding:5px 14px; font-size:.95rem}
+/* 응답 분기 */
+.route{display:flex; flex-direction:column}
+.route > div{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.2fr); gap:6px 24px; align-items:baseline; padding-block:14px; border-bottom:1px solid var(--line)}
+.route b{font-weight:700}
+.route em{font-style:normal; color:var(--muted)}
+.route span::before{content:"→ "; color:var(--accent)}
+@media (max-width:640px){.route > div{grid-template-columns:minmax(0,1fr)}}
 
-/* Contact */
-.contact{padding-block:clamp(64px,10vw,120px) 40px}
-.contact .mail{font-family:var(--display); font-weight:800; font-stretch:105%; font-size:clamp(1.7rem,6vw,4.6rem); letter-spacing:-.035em; line-height:1.05; text-decoration:none; display:inline-block; margin-top:16px}
-.contact .mail:hover{text-decoration:underline; text-underline-offset:8px; text-decoration-thickness:2px}
-.foot{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; border-top:1px solid var(--line); margin-top:64px; padding-block:18px 40px}
+/* 4-Layer */
+.bubble{align-self:flex-start; max-width:100%; border:1px solid var(--line); padding:12px 18px; font-size:1.04rem}
+.bubble.out{align-self:flex-end; border:2px solid var(--accent); color:var(--accent); font-weight:700}
+.bubble small{display:block; font-size:.82rem; opacity:.72}
+.stack{display:flex; flex-direction:column; border-top:2px solid var(--head)}
+.layer{display:grid; grid-template-columns:minmax(0,12em) minmax(0,1fr); gap:6px 24px; padding-block:14px; border-bottom:1px solid var(--line)}
+.layer b{font-family:var(--display); font-weight:800; margin-right:8px}
+.layer.skip div{color:var(--muted)}
+@media (max-width:640px){.layer{grid-template-columns:minmax(0,1fr)}}
 
-/* v13: 모바일 OCR 썸네일 (위 .mini-* 규칙보다 뒤에 와야 함) */
-@media (max-width:860px){.shot.draw{aspect-ratio:auto; padding:22px 14px}.mini-row{gap:5px; grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,1.4fr)}.mini-row span{font-size:.7rem; padding:8px 0; overflow-wrap:normal; letter-spacing:-.02em}.mini-out{flex-wrap:wrap}.mini-out strong{white-space:nowrap}}
+/* 소개 */
+.about-rows{border-top:2px solid var(--head)}
+.about-rows > div{display:grid; grid-template-columns:7em minmax(0,1fr); gap:16px; padding-block:16px; border-bottom:1px solid var(--line)}
+.about-rows dt{font-weight:700; color:var(--muted)}
+.about-rows dd{font-size:clamp(1rem,1.5vw,1.14rem)}
+.about-rows dd span{display:block}
+.others{display:flex; flex-direction:column}
+.other{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); gap:10px clamp(20px,3vw,40px); padding-block:clamp(24px,3vw,36px); border-bottom:1px solid var(--line)}
+.other:first-child{border-top:1px solid var(--line)}
+.other h3{font-size:clamp(1.25rem,2.2vw,1.6rem); font-weight:900; letter-spacing:-.02em; line-height:1.35}
+.other h3 small{display:block; font-size:.88rem; font-weight:400; color:var(--muted); letter-spacing:0; margin-top:4px}
+.other .prose{gap:8px}
+@media (max-width:760px){.other{grid-template-columns:minmax(0,1fr)}}
+.foot{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px; color:var(--muted); font-size:.88rem; border-top:1px solid var(--line); margin-top:clamp(56px,8vw,96px); padding-block:18px 40px}
 
-/* v13: 스크롤 등장. JS가 있을 때만 숨겼다가 보이면 올라옴. 움직임 줄이기 설정이면 투명도만 바뀜 */
-.js .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s var(--ease-out), transform .6s var(--ease-out); transition-delay:var(--d,0ms)}
-.js .reveal.in{opacity:1; transform:none}
-@media (prefers-reduced-motion:reduce){.js .reveal{transform:none; transition:opacity .3s ease}}
-
-/* 그 밖의 작업 */
-.others{display:grid; grid-template-columns:96px minmax(0,1fr); gap:0; padding-block:28px 32px; border-bottom:1px solid var(--line)}
-.others > .label{grid-column:1 / -1; margin-bottom:16px}
-.others ul{grid-column:2; list-style:none; margin:0; padding:0}
-.others li{display:grid; grid-template-columns:88px minmax(0,16rem) minmax(0,1fr); gap:6px 24px; align-items:baseline; padding-block:14px; border-top:1px solid var(--line)}
-.others li:first-child{border-top:0}
-.others .yr{font-family:var(--mono); font-size:.85rem; color:var(--muted); font-variant-numeric:tabular-nums}
-.others strong{font-size:1.08rem; font-weight:700; letter-spacing:-.01em}
-.others p{color:var(--muted); font-size:1rem}
-@media (max-width:860px){.others{grid-template-columns:56px minmax(0,1fr)}.others li{grid-template-columns:72px minmax(0,1fr)}.others li p{grid-column:2}}
-@media (max-width:480px){.others{grid-template-columns:minmax(0,1fr)}.others ul{grid-column:1}}
+/* 표지 타이핑: 글자는 처음부터 자리를 차지하고, 왼쪽부터 보이는 폭만 늘린다. 스크립트가 멈춰도 3초 뒤에는 보인다 */
+.cover .word{position:relative}
+.cover .word .typed{display:inline-block}
+.typing .cover .word .typed{clip-path:inset(0 100% 0 0); animation:typed-safe 0s 3s forwards}
+@keyframes typed-safe{to{clip-path:inset(-.2em)}}
+.caret{position:absolute; top:.12em; height:.78em; width:.045em; background:var(--head); transition:opacity .25s ease}
 </style>
-<script>if('IntersectionObserver' in window)document.documentElement.classList.add('js')</script>
+<script>if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('typing')</script>
 </head>
 <body>
-
 <a class="skip-link" href="#work">본문으로 건너뛰기</a>
 <header class="bar">
-  <div class="frame">
+  <div class="wrap">
     <b>안채연</b>
-    <nav aria-label="페이지 메뉴"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
-    <div class="bar-end"><span class="label">AI Developer Portfolio</span><button class="theme" type="button" id="theme-toggle">밝게 보기</button></div>
+    <nav aria-label="페이지 메뉴"><a href="#work">Work</a><a href="#basics">Basics</a><a href="#about">About</a></nav>
   </div>
 </header>
 
 <main>
-  <section class="hero">
-    <div class="frame">
-      <div class="hero-top label"><span>portfolio/</span><span>2024 – 2026</span><span>updated 2026.10</span></div>
-      <p class="hero-word" aria-hidden="true">Portfolio</p>
-      <div class="hero-main">
-        <h1>안채연<small>AI 개발 · AI융합학과 2027년 2월 졸업 예정</small></h1>
-        <p>모델을 수치로 비교해 고르고,<br>서비스에 맞는 구조로 설계합니다.</p>
-      </div>
-      <dl class="info">
-        <div><dt class="label">focus/</dt><dd>음성 AI 서비스<br>LLM 응답 설계<br>Computer Vision</dd></div>
-        <div><dt class="label">awards/</dt><dd>보건복지부장관상 최우수상 <br>중소벤처기업부장관상 특별상<br>산학협력 팀프로젝트 연구 발표 동상</dd></div>
-        <div><dt class="label">contact/</dt><dd id="mail">chaeyeonoqee@gmail.com</dd><button class="copy" type="button" data-copy="chaeyeonoqee@gmail.com">이메일 복사</button></div>
-      </dl>
+  <section class="cover wrap">
+    <div class="tag"><span>AI 개발</span><span class="tnum">2026.11 갱신</span></div>
+    <p class="word" aria-hidden="true"><span class="typed">Portfolio</span></p>
+    <hr class="rule">
+    <h1>안채연</h1>
+    <p class="aff">강원대학교 AI융합학과 · 컴퓨터비전 연구실 학부연구생</p>
+    <p class="intro">컴퓨터비전 연구실에서 모델 실험을 하고, 문서 데이터 처리와 음성 AI 서비스를 만들어 봤습니다.</p>
+    <div class="mailrow"><span class="mail" id="mail">chaeyeonoqee@gmail.com</span><button class="btn copy" type="button" data-copy="chaeyeonoqee@gmail.com">이메일 복사</button></div>
+  </section>
+
+  <section id="work" class="wrap" aria-label="작업 목록">
+    <div class="index">
+      <a class="idx" href="#research"><h3>텍스트 위변조 탐지 연구<small>컴퓨터비전 연구실 · 2026.03 ~ 진행 중</small></h3><strong>F1 0.806 → 0.846</strong></a>
+      <a class="idx" href="#deploy"><h3>연구 모델 CPU 경량화<small>개인 실험 · 2026.11</small></h3><strong>용량 −59% · 시간 −37%</strong></a>
+      <a class="idx" href="#pipeline"><h3>손글씨 검사지 데이터화<small>컴퓨터비전 연구실 · 2026</small></h3><strong>약 1,100건 중 91%</strong></a>
+      <a class="idx" href="#service"><h3>노인 대화 AI 서비스 ORA<small>창업동아리 PASCAL팀 AI 파트 · 2025</small></h3><strong>4~6초 → 1~2초</strong></a>
+      <a class="idx" href="#analysis"><h3>쇼핑 행동 데이터 분석<small>수업 팀 프로젝트 · 2026</small></h3><strong>510세션 · 변수 19개</strong></a>
+      <a class="idx" href="#basics"><h3>신경망 구조 직접 구현<small>기계학습도구 수업 실습 · 2026</small></h3><strong class="ko">MLP부터 ResNet까지</strong></a>
     </div>
   </section>
 
-  <section id="work" class="frame" aria-labelledby="work-title">
-    <div class="sec-head"><h2 id="work-title">Selected Work</h2><span class="label">주요 작업 3개<br>그 밖의 작업 3개</span></div>
-    <div class="rows">
-      <a class="row reveal" style="--d:0ms" href="#ora">
-        <span class="no">01</span>
-        <div class="txt"><h3>ORA 고령자 음성 AI 서비스</h3><p>전화로 대화하는 AI. 응답 구조와 프롬프트 설계</p><span class="tags">2025 / Whisper / RAG / BERT</span><span class="result">응답 4~6초 → 1~2초</span><span class="more" aria-hidden="true">자세히 보기</span></div>
-        <div class="pic"><div class="shot"><img src="img/ora_cover.webp" alt="ORA 소개 화면" width="1806" height="1018"></div></div>
-      </a>
-      <a class="row reveal" style="--d:60ms" href="#ocr">
-        <span class="no">02</span>
-        <div class="txt"><h3>심리검사지 OCR 자동화</h3><p>대학병원 손글씨 검사지를 텍스트 데이터로</p><span class="tags">2026 / Vision API / Gemini</span><span class="result">약 1,100건 중 약 91% 자동 처리</span><span class="more" aria-hidden="true">자세히 보기</span></div>
-        <div class="pic"><div class="shot draw"><div class="mini-ocr" role="img" aria-label="OCR 처리 5단계: PDF 변환, OCR, 줄 정렬, 문서 분류, Gemini 값 추출. 원본 이미지는 마지막 단계에 함께 전달. 약 1,100건 중 약 1,000건 처리">
-          <div class="mini-bypass"><span>원본 이미지 함께 전달</span></div>
-          <div class="mini-row"><span><b>01</b>PDF</span><span><b>02</b>OCR</span><span><b>03</b>줄 정렬</span><span><b>04</b>분류</span><span class="k"><b>05</b>Gemini</span></div>
-          <div class="mini-out"><strong>1,000 / 1,100</strong><span>검사지 자동 처리</span></div>
-        </div></div></div>
-      </a>
-      <a class="row reveal" style="--d:120ms" href="#forgery">
-        <span class="no">03</span>
-        <div class="txt"><h3>텍스트 위조 탐지 연구</h3><p>모듈 제거·결합 실험으로 탐지 모델 개선</p><span class="tags">2026 / DTD / FFDN / TTFN</span><span class="result">F1 0.806 → 0.846</span><span class="more" aria-hidden="true">자세히 보기</span></div>
-        <div class="pic"><div class="shot"><img src="img/forgery_model.webp" alt="실험 모델 구조도" width="1387" height="589"></div></div>
-      </a>
+  <!-- 연구 -->
+  <section id="research" class="wrap">
+    <div class="divider">
+      <p class="word" aria-hidden="true">Research</p>
+      <hr class="rule">
     </div>
-    <div class="others reveal">
-      <span class="label">others/ 그 밖의 작업</span>
-      <ul>
-        <li><span class="yr">2026.07</span><strong>NODO 강의 보조 프로그램</strong><p>기업 인턴. 기획, UI/UX 디자인, PM을 맡았고 회사 도입 검토까지 이어졌습니다. 개발은 팀원이 맡았습니다.</p></li>
-        <li><span class="yr">2026</span><strong>쇼핑 행동 데이터 분석</strong><p>수업 팀 프로젝트. 분석 방법 조사, 결과 해석, 발표를 맡았습니다.</p></li>
-        <li><span class="yr">2024</span><strong>Nurspace 간병인 매칭 웹</strong><p>해커톤. UI 디자인과 React 화면 구현을 맡았습니다.</p></li>
-      </ul>
+    <div class="case">
+      <aside class="side"><div class="in"><h2>텍스트 위변조 탐지 연구</h2><dl class="facts"><div><dt>기간</dt><dd>2026.03 ~ 진행 중</dd></div><div><dt>소속</dt><dd>컴퓨터비전 연구실</dd></div><div><dt>역할</dt><dd>개인 연구 (국내 학회 투고 목표)</dd></div><div><dt>비교 모델</dt><dd>DTD, FFDN, TTFN</dd></div><div><dt>기술</dt><dd>Python, PyTorch</dd></div><div><dt>구현</dt><dd>AI 코딩 도구 활용<br>논문 분석·실험 설계·결과 해석은 직접</dd></div></dl></div></aside>
+      <div class="body">
+    <div class="msg">
+      <h3>SOTA 모델의 모듈을 빼고 붙여 성능을 비교했습니다</h3>
+      <div class="chips" style="--n:4">
+        <div class="chip"><b>논문 분석</b><span>DTD · FFDN · TTFN 구조 비교</span></div>
+        <div class="chip"><b>모듈 제거</b><span>효과가 작은 모듈 빼기</span></div>
+        <div class="chip"><b>모듈 결합</b><span>다른 SOTA 모듈 붙이기</span></div>
+        <div class="chip"><b>교차 검증</b><span>여러 데이터셋에서 측정</span></div>
+      </div>
+      <figure><img class="zoomable" src="img/forgery_model.webp" alt="실험 모델 구조도: Visual Perception Head와 Frequency, Noise, Principal Component를 다루는 Auxiliary View Encoder의 특징을 gate와 Zero Init Conv로 결합해 Segmentation Head로 예측" width="1387" height="589"><figcaption>실험 모델 구조. 이미지 특징과 주파수·노이즈·주성분 특징을 합쳐 위조 영역을 예측합니다.</figcaption></figure>
+    </div>
+    <div class="msg">
+      <div class="split stat">
+        <div>
+          <span class="lab">SCD 교차 데이터셋 F1 (모듈 결합 실험)</span>
+          <p class="big">0.806 → 0.846</p>
+        </div>
+        <table class="narrow">
+          <thead><tr><th>지표</th><th>기존</th><th>개선</th></tr></thead>
+          <tbody>
+            <tr><td>Precision</td><td>0.796</td><td class="up">0.860</td></tr>
+            <tr><td>Recall</td><td>0.816</td><td class="up">0.832</td></tr>
+            <tr><td>F1-score</td><td>0.806</td><td class="up">0.846</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box"><b>한계</b>같은 결합이 다른 데이터셋에서는 성능을 떨어뜨렸습니다. 데이터셋에 따라 모듈 효과가 달라지는 일반화 문제로 보고 원인을 찾고 있습니다.</div>
+    </div>
+      </div>
     </div>
   </section>
 
-  <div class="frame">
-    <!-- 01 ORA -->
-    <article class="case reveal" id="ora">
-      <aside class="case-side"><div class="in">
-        <span class="no">case 01/</span>
-        <h2>ORA</h2>
-        <dl class="facts">
-          <div><dt class="label">기간</dt><dd>2025년 1월 – 12월</dd></div>
-          <div><dt class="label">소속</dt><dd>창업동아리 PASCAL</dd></div>
-          <div><dt class="label">역할</dt><dd>AI 파트 주니어 개발자</dd></div>
-          <div><dt class="label">기술</dt><dd>Whisper, RAG, Gemini, BERT</dd></div>
-          <div><dt class="label">수상</dt><dd>보건복지부장관상 최우수상<br>중소벤처기업부장관상 특별상<br>생성형 AI 아이디어 경진대회 1등<br>산학협력 팀프로젝트 연구 발표 동상</dd></div>
-        </dl>
-      </div></aside>
-      <div class="case-body">
-        <div class="lead"><strong>4~6초 → 1~2초</strong><span>AI 응답 시간. 응답 구조를 직접 설계해 줄였습니다.</span></div>
-
-        <div class="block"><span class="label">problem/</span><div>
-          <p>어르신이 전화로 AI와 대화하며 복지·의료 서비스를 신청하는 서비스입니다. 모든 질문을 LLM이 처리해 답이 4~6초씩 걸렸고, 실제 통화처럼 느껴지지 않았습니다.</p>
-        </div></div>
-
-        <div class="block"><span class="label">model/</span><div>
-          <h4>음성 인식 모델은 수치로 비교해 골랐습니다</h4>
-          <p>Whisper tiny, base, small을 같은 문장으로 시험해 오류율을 비교했습니다. 파인튜닝까지 진행했지만 서비스 적용은 보류했습니다.</p>
-          <figure class="bars">
-            <div>
-              <p class="label">평균 단어 오류율 WER</p>
-              <div class="meter"><span>tiny</span><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--v:1.025"></span></span><span class="bar-val">1.025</span></div>
-              <div class="meter best"><span>base</span><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--v:0.498"></span></span><span class="bar-val">0.498</span></div>
-              <div class="meter"><span>small</span><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--v:0.856"></span></span><span class="bar-val">0.856</span></div>
-            </div>
-            <div>
-              <p class="label">평균 글자 오류율 CER</p>
-              <div class="meter"><span>tiny</span><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--v:1.35"></span></span><span class="bar-val">1.35</span></div>
-              <div class="meter best"><span>base</span><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--v:0.335"></span></span><span class="bar-val">0.335</span></div>
-              <div class="meter"><span>small</span><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--v:0.793"></span></span><span class="bar-val">0.793</span></div>
-            </div>
-            <figcaption>낮을수록 정확합니다. 두 지표 모두 base가 가장 낮았습니다. 원본 그래프: <a href="img/whisper_wer.png" target="_blank" rel="noopener">WER</a> · <a href="img/whisper_cer.png" target="_blank" rel="noopener">CER</a></figcaption>
-          </figure>
-        </div></div>
-
-        <div class="block"><span class="label">pipeline/</span><div>
-          <h4>프롬프트를 상황마다 새로 만들도록 구조를 바꿨습니다</h4>
-          <p>기존에는 미리 써 둔 고정 프롬프트로 Gemini를 호출했습니다. 사용자 정보와 RAG 검색 결과를 합쳐 통화마다 프롬프트를 새로 만드는 함수를 추가했습니다.</p>
-
-          <div class="diagram" role="img" aria-label="기존 구조: 전화 수신, 사용자 정보 로드, RAG 검색, Gemini 호출 순서이며 system_prompt는 정적이다.">
-            <div class="label"><span>before/ 기존 구조</span><span>정적 프롬프트</span></div>
-            <div class="steps" style="--n:4">
-              <div class="step"><div class="node">전화 수신</div></div>
-              <div class="step"><div class="node">사용자 정보 로드</div><div class="down"></div><div class="data">senior_info</div></div>
-              <div class="step"><div class="node">RAG 검색</div><div class="down"></div><div class="data">rag_results</div></div>
-              <div class="step"><div class="node">Gemini 호출</div><div class="down"></div><div class="data">system_prompt (정적)</div></div>
-            </div>
-          </div>
-
-          <div class="diagram" role="img" aria-label="통합 후 구조: senior_info와 rag_results를 build_system_prompt 함수가 합쳐 동적 system_prompt를 만들고, 그 프롬프트로 Gemini를 호출한다.">
-            <div class="label"><span>after/ 통합 후 구조</span><span>동적 프롬프트</span></div>
-            <div class="steps" style="--n:3">
-              <div class="step"><div class="node">전화 수신</div></div>
-              <div class="step"><div class="node">사용자 정보 로드</div><div class="down"></div><div class="data">senior_info</div></div>
-              <div class="step"><div class="node">RAG 검색</div><div class="down"></div><div class="data">rag_results</div></div>
-            </div>
-            <div class="merge" aria-hidden="true"><i></i></div>
-            <div class="chain-wrap"><div class="chain">
-              <div class="node hi">build_system_prompt<small>새로 만든 함수 · 동적 프롬프트 생성</small></div>
-              <div class="down"></div>
-              <div class="data">system_prompt (동적)</div>
-              <div class="down"></div>
-              <div class="node">Gemini 호출</div>
-            </div></div>
-          </div>
-          <p class="muted">날씨처럼 답이 정해진 질문은 API와 RAG로 바로 답하게 해, LLM이 처리하는 양 자체도 줄였습니다. 직접 50회 테스트해 오류를 1~2회로 줄였습니다.</p>
-        </div></div>
-
-        <div class="block"><span class="label">4-layer/</span><div>
-          <h4>AI가 스스로 상황을 판단하는 4-Layer 구조</h4>
-          <p>문제가 생길 때마다 프롬프트에 예시를 덧붙이던 방식은 규칙이 끝없이 늘어났습니다. 그래서 모든 응답이 네 층을 차례로 거치도록 설계했습니다. 아래는 실제 발화 하나가 네 층을 통과하는 과정입니다.</p>
-
-          <div class="diagram" role="img" aria-label="사용자 발화 '무릎이 너무 아파'가 Layer 1 정체성, Layer 2 판단 틀, Layer 3 특수 상황, Layer 4 품질 점검을 차례로 거쳐 최종 응답 '저런, 비 오는 날이면 더 쑤시죠? 파스는 붙이셨어요?'가 된다.">
-            <div class="label"><span>example/ 발화 하나가 네 층을 지나는 과정</span><span>L1 → L4</span></div>
-            <p class="bubble"><span class="label">사용자 발화</span>"무릎이 너무 아파"</p>
-            <div class="down"></div>
-            <div class="stack">
-              <div class="layer">
-                <div class="layer-name"><b>L1</b><span>정체성</span><em>항상 적용 · 불변</em></div>
-                <div class="layer-do"><p>정해진 AI 페르소나로 응답합니다. 해요체, 따뜻한 톤.</p></div>
-              </div>
-              <div class="layer">
-                <div class="layer-name"><b>L2</b><span>판단 틀</span><em>모든 응답의 사고 과정</em></div>
-                <div class="layer-do"><div class="sub">
-                  <div><span class="label">step1 감정</span>"고통/불편" 감지</div>
-                  <div><span class="label">step2 모드</span>감성 우선 (90:10)</div>
-                  <div><span class="label">step3 질문</span>반드시 질문으로 끝내기</div>
-                </div></div>
-              </div>
-              <div class="layer skip">
-                <div class="layer-name"><b>L3</b><span>특수 상황</span><em>필요할 때만 · 최소 유지</em></div>
-                <div class="layer-do"><p>해당 없음. 일반적인 건강 이야기입니다.</p></div>
-              </div>
-              <div class="layer">
-                <div class="layer-name"><b>L4</b><span>품질 점검</span><em>생성 후 최종 필터</em></div>
-                <div class="layer-do"><ul class="checks"><li>질문으로 끝나는가</li><li>앵무새처럼 따라 하지 않았는가</li><li>1~2문장인가</li></ul></div>
-              </div>
-            </div>
-            <div class="down"></div>
-            <p class="bubble out"><span class="label">최종 응답</span>"저런, 비 오는 날이면 더 쑤시죠? 파스는 붙이셨어요?"</p>
-          </div>
-        </div></div>
-
-        <div class="block"><span class="label">decision/</span><div>
-          <h4>만든 분류 모델을, 응답 속도를 위해 빼자고 제안했습니다</h4>
-          <p>RAG로 보낼 질문을 고르기 위해 BERT로 10개 안팎의 주제 분류 모델을 학습했습니다. 그런데 분류 단계가 하나 늘자 줄여 둔 응답 시간이 다시 길어졌고, 실제로 필요한 판단은 RAG와 LLM 두 갈래뿐이었습니다. 목적에 비해 과한 단계라고 보고 팀장과 함께 제외를 제안해, 서비스에는 넣지 않았습니다.</p>
-        </div></div>
-
-        <div class="block"><span class="label">result/</span><div>
-          <p>응답 시간이 1~2초로 줄어 실제 대화에 가까워졌습니다.</p>
-          <!-- <p class="muted">합류할 때는 AI 지식이 거의 없어 Attention과 Transformer부터 공부했습니다.</p> -->
-        </div></div>
+  <!-- 경량화 -->
+  <section id="deploy" class="wrap">
+    <div class="divider">
+      <p class="word" aria-hidden="true">Deploy</p>
+      <hr class="rule">
+    </div>
+    <div class="case">
+      <aside class="side"><div class="in"><h2>연구 모델 CPU 경량화</h2><dl class="facts"><div><dt>기간</dt><dd>2026.11</dd></div><div><dt>구분</dt><dd>연구 모델로 해본 개인 실험</dd></div><div><dt>모델</dt><dd>FFDN 기반 ConvNeXtV2-base + DCT 주파수 브랜치, RWTamper-OSNs 학습</dd></div><div><dt>기술</dt><dd>PyTorch, ONNX Runtime</dd></div><div><dt>구현</dt><dd>AI 코딩 도구(Claude Code)로 작성<br>비교 대상·측정 항목·검증 기준은 직접</dd></div></dl></div></aside>
+      <div class="body">
+    <div class="msg">
+      <h3>GPU 서버에서만 돌던 연구 모델을 노트북 CPU에서 돌렸습니다</h3>
+      <div class="split">
+        <div class="box"><b>전</b>mmsegmentation · GPU 서버 전용 · 체크포인트 1.3GB</div>
+        <div class="box"><b>후</b>PyTorch만으로 재구현 → ONNX Runtime · 노트북 CPU에서 실행 · 모델 173.5MB</div>
       </div>
-    </article>
-
-    <!-- 02 OCR -->
-    <article class="case reveal" id="ocr">
-      <aside class="case-side"><div class="in">
-        <span class="no">case 02/</span>
-        <h2>심리검사지 OCR 자동화</h2>
-        <dl class="facts">
-          <div><dt class="label">기간</dt><dd>2026년 3월 – 현재</dd></div>
-          <div><dt class="label">소속</dt><dd>컴퓨터비전 연구실 (대학병원 협업)</dd></div>
-          <div><dt class="label">역할</dt><dd>학부연구생, 단독 수행</dd></div>
-          <div><dt class="label">기술</dt><dd>Google Vision API, Gemini 2.5 Flash, Python</dd></div>
-        </dl>
-      </div></aside>
-      <div class="case-body">
-        <div class="lead"><strong>약 91%</strong><span>검사지 약 1,100건 중 약 1,000건을 자동으로 텍스트화했습니다.</span></div>
-        <div class="block"><span class="label">problem/</span><div>
-          <p>검사지가 스캔 PDF라 글자를 뽑을 수 없었습니다. 손글씨 숫자와 문장이 섞여 있었고, 여러 종류의 검사지가 무작위로 섞여 있었습니다.</p>
-        </div></div>
-        <div class="block"><span class="label">process/</span><div>
-          <div class="diagram" role="img" aria-label="OCR 처리 5단계. 1 스캔 PDF를 페이지별 이미지로 변환, 2 Vision API로 단어와 좌표 추출, 3 세로 위치 기준으로 같은 줄 묶기, 4 상단 1,000자 키워드로 문서 종류 판별, 5 Gemini가 원본 이미지와 정렬 텍스트를 대조해 값 추출. 원본 이미지는 5단계에 함께 전달된다. 결과는 약 1,100건 중 약 1,000건.">
-            <div class="label"><span>logic/ 처리 순서</span><span>scan → text data</span></div>
-            <div class="ocr-flow">
-              <div class="ocr-bypass" aria-hidden="true"><span>원본 이미지 → 05단계 교차 확인용</span></div>
-              <div class="ostep"><div class="node"><b>01</b><strong>이미지 변환</strong></div><span class="tool">pdf2image</span><p>스캔 PDF를 페이지별 JPEG로 나눕니다.</p></div>
-              <div class="ostep"><div class="node"><b>02</b><strong>OCR</strong></div><span class="tool">Vision API</span><p>단어와 꼭짓점 좌표를 함께 뽑습니다.</p></div>
-              <div class="ostep"><div class="node"><b>03</b><strong>줄 정렬</strong></div><span class="tool">Python</span><p>세로 위치가 가까운 단어를 한 줄로 묶고 왼쪽부터 다시 놓습니다.</p></div>
-              <div class="ostep"><div class="node"><b>04</b><strong>문서 분류</strong></div><span class="tool">규칙 기반</span><p>상단 1,000자에서 검사지 고유 제목과 지시문을 찾습니다.</p></div>
-              <div class="ostep key"><div class="node"><b>05</b><strong>값 추출</strong></div><span class="tool">Gemini 2.5 Flash</span><p>원본 이미지와 정렬 텍스트를 대조해 필요한 값만 남깁니다.<span class="mobile-note muted">원본 이미지도 함께 넣습니다.</span></p></div>
-            </div>
-            <div class="ocr-out"><strong>약 1,000 / 1,100건</strong><span>정리된 텍스트 데이터 → 데이터 분석 연구실 전달</span></div>
-          </div>
-          <p>핵심은 3단계와 5단계입니다. 좌표만으로 기울어진 스캔을 바로잡아 사람이 읽는 순서대로 문장을 조립했고, AI에는 정렬된 텍스트와 원본 이미지를 함께 줘서 서로 대조하게 했습니다.</p>
-        </div></div>
-        <div class="block"><span class="label">result/</span><div>
-          <p>1차 처리를 약 하루 만에 끝냈고, 결과를 데이터 분석 연구실에 전달해 컨펌을 받았습니다.</p>
-        </div></div>
+      <div class="chips" style="--n:3">
+        <div class="chip"><b>재구현 검증</b><span>원본 출력과 픽셀 단위 대조</span></div>
+        <div class="chip"><b>ONNX 변환</b><span>출력 차이 10⁻⁸ 수준</span></div>
+        <div class="chip"><b>INT8 양자화</b><span>MatMul만 양자화</span></div>
       </div>
-    </article>
+    </div>
+    <div class="msg">
+      <h3>처음에는 원본과 결과가 달랐습니다</h3>
+      <p>같은 이미지의 같은 영역을 재구현 모델은 0.84, 원본은 0.004로 판단했습니다. 의심한 원인을 하나씩 지웠습니다.</p>
+      <div class="split">
+        <ul class="checks">
+          <li>GPU 연산 정밀도 (TF32)</li>
+          <li>GPU와 CPU 연산 차이</li>
+          <li>테스트 이미지 저장 과정</li>
+          <li class="hit">재구현 구조 → 원인</li>
+        </ul>
+        <div>
+          <span class="lab">원본 코드</span>
+<pre tabindex="0"><code>stride = <mark>[1]</mark>
+if stride == <mark>1</mark>:
+    x = x + inputs</code></pre>
+          <p class="note" style="margin-top:10px">[1] == 1은 False라서 마지막 줄이 실행되지 않았습니다. 재구현도 원본 동작에 맞췄습니다.</p>
+        </div>
+      </div>
+      <div class="figs">
+        <div class="fig"><b>판단이 뒤집힌 픽셀</b><p class="big">827 → 0</p></div>
+        <div class="fig"><b>원본과 픽셀 일치</b><p class="big">100%</p><small>소수점 셋째 자리 반올림</small></div>
+        <div class="fig"><b>F1</b><p class="big ink">0.4697</p><small>원본 0.4698</small></div>
+      </div>
+    </div>
+    <div class="msg">
+      <h3>INT8로 바꾼다고 무조건 빨라지지는 않았습니다</h3>
+      <div class="hb" role="img" aria-label="이미지 1장 추론 시간. PyTorch 원본 4.2초, ONNX 변환 3.3초, INT8 Conv까지 32.6초, INT8 MatMul만 2.6초.">
+        <span class="name">PyTorch 원본</span><span class="track"><i style="--v:.1288"></i><b>4.2초</b></span>
+        <span class="name">ONNX 변환</span><span class="track"><i style="--v:.1012"></i><b>3.3초</b></span>
+        <span class="name">INT8 (Conv까지)</span><span class="track"><i style="--v:1"></i><b>32.6초</b></span>
+        <span class="name">INT8 (MatMul만)</span><span class="track hi"><i style="--v:.0798"></i><b>2.6초</b></span>
+      </div>
+      <p>Conv까지 INT8로 바꾸면 ONNX Runtime CPU에서 최적화가 덜 된 연산(ConvInteger)을 거쳐 오히려 느려졌습니다. 그래서 연산 대부분을 차지하는 MatMul만 INT8로 바꿨습니다.</p>
+      <p class="note">노트북 CPU 4스레드 · 이미지 1장(512×512) · 20회 평균</p>
+    </div>
+    <div class="msg">
+      <h3>결과</h3>
+      <div class="figs">
+        <div class="fig"><b>모델 용량</b><p class="big">−59%</p><span class="tnum">424.7MB → 173.5MB</span><small>가중치를 INT8로 저장</small></div>
+        <div class="fig"><b>추론 시간</b><p class="big">−37%</p><span class="tnum">4.2초 → 2.6초</span><small>PyTorch 원본 대비</small></div>
+        <div class="fig"><b>정확도 (F1)</b><p class="big ko">유지</p><span class="tnum">0.4697 → 0.4729</span><small>테스트 이미지 30장 기준, 오차 범위 안. 앞선 연구의 F1과는 모델·데이터 조건이 다릅니다.</small></div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 03 위조 탐지 -->
-    <article class="case reveal" id="forgery">
-      <aside class="case-side"><div class="in">
-        <span class="no">case 03/</span>
-        <h2>텍스트 위조 탐지 연구</h2>
-        <dl class="facts">
-          <div><dt class="label">기간</dt><dd>2026년 3월 – 진행 중</dd></div>
-          <div><dt class="label">소속</dt><dd>컴퓨터비전 연구실</dd></div>
-          <div><dt class="label">역할</dt><dd>개인 연구 (국내 학회 투고 목표)</dd></div>
-          <div><dt class="label">비교 모델</dt><dd>DTD, FFDN, TTFN</dd></div>
-        </dl>
-      </div></aside>
-      <div class="case-body">
-        <div class="lead"><strong>F1 0.806 → 0.846</strong><span>SCD 교차 데이터셋 기준</span></div>
-        <div class="block"><span class="label">model/</span><div>
-          <p>관련 논문 3~4편을 분석하고 DTD, FFDN, TTFN의 기준 성능을 차례로 측정했습니다. 이후 FFDN의 일부 모듈을 빼고 TTFN의 모듈을 더하는 방식으로 실험 모델을 만들었습니다.</p>
-          <figure><img src="img/forgery_model.webp" alt="실험 모델 구조도: Visual Perception Head와 Frequency, Noise, Principal Component를 다루는 Auxiliary View Encoder의 특징을 gate와 Zero Init Conv로 결합해 Segmentation Head로 예측" width="1387" height="589" loading="lazy"><figcaption>실험 모델 구조. 이미지 특징과 주파수·노이즈·주성분 특징을 합쳐 위조 영역을 예측합니다.</figcaption></figure>
-        </div></div>
-        <div class="block"><span class="label">result/</span><div>
+  <!-- 파이프라인 -->
+  <section id="pipeline" class="wrap">
+    <div class="divider">
+      <p class="word" aria-hidden="true">Pipeline</p>
+      <hr class="rule">
+    </div>
+    <div class="case">
+      <aside class="side"><div class="in"><h2>손글씨 검사지 데이터화</h2><dl class="facts"><div><dt>기간</dt><dd>2026.03 ~ 현재</dd></div><div><dt>소속</dt><dd>컴퓨터비전 연구실 (대학병원 협업)</dd></div><div><dt>역할</dt><dd>지도교수 지시 업무 단독 수행</dd></div><div><dt>데이터</dt><dd>손글씨 정신검사지 6쪽 PDF, 약 1,100건</dd></div><div><dt>기술</dt><dd>Google Vision API, Gemini, Python</dd></div><div><dt>구현</dt><dd>AI 코딩 도구 활용<br>처리 구조 설계·오류 특정·검증은 직접</dd></div></dl></div></aside>
+      <div class="body">
+    <div class="msg">
+      <h3>레이아웃이 제각각인 손글씨 검사지를 데이터로 바꿨습니다</h3>
+      <div class="chips" style="--n:4">
+        <div class="chip"><b>페이지 구분</b><span>시작 문장 기준</span></div>
+        <div class="chip"><b>1차 인식</b><span>Google Vision API</span></div>
+        <div class="chip"><b>정제</b><span>Gemini로 맞춤법·줄바꿈</span></div>
+        <div class="chip"><b>피드백 반영</b><span>데이터팀 피드백 10회 이상</span></div>
+      </div>
+      <div class="split">
+        <div>
+          <p class="big">91%</p>
+          <p>약 1,100건 중 약 1,000건 정상 처리</p>
+        </div>
+        <ul class="prose">
+          <li>원본 인식 결과는 따로 보존</li>
+          <li>원본 글씨 품질 문제를 빼면 거의 모두 처리</li>
+          <li>결과물은 데이터 분석 연구실이 수용</li>
+        </ul>
+      </div>
+    </div>
+    <div class="msg">
+      <h3>넘긴 데이터에서 나온 오류를 원본과 대조해 다시 반영했습니다</h3>
+      <div class="chips" style="--n:4">
+        <div class="chip"><b>오류 확인</b><span>검토하며 찾거나 요청받은 오류</span></div>
+        <div class="chip"><b>원본 대조</b><span>원본 PDF와 결과를 대조해 정확히 특정</span></div>
+        <div class="chip"><b>수정 지시</b><span>특정한 내용으로 AI에 로직 수정 지시</span></div>
+        <div class="chip"><b>다시 전달</b><span>데이터 분석 연구실이 검토</span></div>
+      </div>
+      <div class="box"><b>반영한 오류 유형</b>숫자를 잘못 인식한 경우 · 값이 한 칸씩 밀린 경우 · 다른 검사지가 섞여 있는 경우 · 같은 항목인데 파일마다 값이 다른 경우 · 값이 정상 범위를 벗어난 경우 · 원본에는 있는데 CSV에 빠진 경우</div>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서비스 -->
+  <section id="service" class="wrap">
+    <div class="divider">
+      <p class="word" aria-hidden="true">Service</p>
+      <hr class="rule">
+    </div>
+    <div class="case">
+      <aside class="side"><div class="in"><h2>노인 대화 AI 서비스 ORA</h2><dl class="facts"><div><dt>기간</dt><dd>2025.01 ~ 2025.12</dd></div><div><dt>소속</dt><dd>창업동아리 PASCAL팀</dd></div><div><dt>역할</dt><dd>AI 파트 주니어 개발자</dd></div><div><dt>기술</dt><dd>Whisper, RAG(LangChain), Gemini</dd></div><div><dt>구현</dt><dd>AI 코딩 도구 활용<br>응답 구조 설계·50회 테스트는 직접</dd></div><div><dt>수상</dt><dd>보건복지부장관상 최우수상<br>중소벤처기업부장관상 특별상<br>산학협력 팀프로젝트 동상</dd></div></dl></div></aside>
+      <div class="body">
+    <div class="msg">
+      <h3>모든 질문을 LLM에 보내지 않고, 질문 종류에 따라 길을 나눴습니다</h3>
+      <p>어르신이 전화로 AI와 대화하는 서비스입니다. 모든 답을 LLM이 만들어 4~6초씩 걸려 통화처럼 느껴지지 않았습니다.</p>
+      <div class="route">
+        <div><b>본인 기록이 필요한 질문</b><em>"내가 어제 약을 먹었나?"</em><span>RAG (LangChain)</span></div>
+        <div><b>날씨 질문</b><em>"오늘 비 와?"</em><span>외부 날씨 정보 연동</span></div>
+        <div><b>일반 지식 질문</b><em>"머리 아플 땐 무슨 약?"</em><span>LLM</span></div>
+      </div>
+      <div class="split stat">
+        <div><span class="lab">응답 시간 (LLM 단독 대비)</span><p class="big">4~6초 → 1~2초</p></div>
+        <p>50회 테스트에서 오류는 1~2회였고, 당시 서비스에 적용했습니다.</p>
+      </div>
+      <figure class="narrow"><img class="zoomable" src="img/ora_cover.webp" alt="ORA 소개 화면" width="1806" height="1018"></figure>
+    </div>
+    <div class="msg">
+      <h3>음성 인식 모델을 같은 기준으로 비교했습니다</h3>
+      <div class="pair">
+        <div>
+          <span class="lab">평균 단어 오류율 (WER)</span>
+          <div class="hb thin" role="img" aria-label="WER tiny 1.025, base 0.498, small 0.856" style="--full:70%">
+            <span>tiny</span><span class="track"><i style="--v:.759"></i><b>1.025</b></span>
+            <span>base</span><span class="track hi"><i style="--v:.369"></i><b>0.498</b></span>
+            <span>small</span><span class="track"><i style="--v:.634"></i><b>0.856</b></span>
+          </div>
+        </div>
+        <div>
+          <span class="lab">평균 글자 오류율 (CER)</span>
+          <div class="hb thin" role="img" aria-label="CER tiny 1.35, base 0.335, small 0.793" style="--full:70%">
+            <span>tiny</span><span class="track"><i style="--v:1"></i><b>1.35</b></span>
+            <span>base</span><span class="track hi"><i style="--v:.248"></i><b>0.335</b></span>
+            <span>small</span><span class="track"><i style="--v:.587"></i><b>0.793</b></span>
+          </div>
+        </div>
+      </div>
+      <p>Whisper tiny·base·small을 같은 문장으로 시험해 오류율을 비교했습니다. 낮을수록 정확합니다. 하나를 골라 파인튜닝까지 진행했지만, 서비스 적용은 보류됐습니다.</p>
+    </div>
+    <div class="msg">
+      <h3>규칙이 끝없이 늘어나지 않도록 프롬프트를 네 층으로 설계했습니다</h3>
+      <p>문제가 생길 때마다 프롬프트에 예시를 덧붙이면 규칙이 계속 늘어났습니다. 그래서 응답이 네 층을 차례로 거치는 구조와, 사용자 정보와 RAG 결과를 합쳐 통화마다 프롬프트를 만드는 구조를 설계했습니다.</p>
+      <p class="bubble"><small>사용자 발화</small>"무릎이 너무 아파"</p>
+      <div class="stack">
+        <div class="layer"><div><b>L1</b>정체성</div><div>정해진 AI 페르소나로 응답합니다. 해요체, 따뜻한 톤.</div></div>
+        <div class="layer"><div><b>L2</b>판단 틀</div><div>"고통/불편" 감지 → 감성 우선 → 반드시 질문으로 끝내기</div></div>
+        <div class="layer skip"><div><b>L3</b>특수 상황</div><div>해당 없음. 일반적인 건강 이야기입니다.</div></div>
+        <div class="layer"><div><b>L4</b>품질 점검</div><div>질문으로 끝나는지, 따라 말하지 않는지, 1~2문장인지. 프롬프트를 고친 뒤 실제 통화로 확인했습니다.</div></div>
+      </div>
+      <p class="bubble out"><small>최종 응답</small>"저런, 비 오는 날이면 더 쑤시죠? 파스는 붙이셨어요?"</p>
+    </div>
+    <div class="msg">
+      <h3>직접 만든 분류 모델을, 서비스 목적에 맞지 않아 빼자고 제안했습니다</h3>
+      <div class="three">
+        <div class="tile"><b>만들었습니다</b><p>질문을 RAG로 보낼지 판단하는 문장 분류 모델을 만들었습니다.</p></div>
+        <div class="tile"><b>따져 봤습니다</b><p>분류 단계가 추가되면서 응답이 다시 느려졌습니다. 필요한 판단은 RAG와 LLM 두 갈래뿐인데, 여러 카테고리로 먼저 나누는 구조라 단계가 과했습니다.</p></div>
+        <div class="tile"><b>제안했습니다</b><p>팀장에게 먼저 의견을 말했고, 함께 대표에게 전해 서비스에 넣지 않기로 했습니다.</p></div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 분석 -->
+  <section id="analysis" class="wrap">
+    <div class="divider">
+      <p class="word" aria-hidden="true">Analysis</p>
+      <hr class="rule">
+    </div>
+    <div class="case">
+      <aside class="side"><div class="in"><h2>쇼핑 행동 데이터 분석</h2><dl class="facts"><div><dt>기간</dt><dd>2026</dd></div><div><dt>소속</dt><dd>분산및병렬데이터분석 팀 프로젝트</dd></div><div><dt>역할</dt><dd>행동 변수 설계, 퍼널 전환율 계산, 통계 검정</dd></div><div><dt>데이터</dt><dd>OPeRA: 아마존 실사용자 쇼핑 로그와 설문</dd></div><div><dt>기술</dt><dd>Spark SQL, PySpark</dd></div><div><dt>구현</dt><dd>AI 코딩 도구 활용<br>변수 설계·검정 방법 선택·결과 해석은 직접</dd></div></dl></div></aside>
+      <div class="body">
+    <div class="msg">
+      <h3>재미로 사는 쇼핑과 필요해서 사는 쇼핑은 구매까지 가는 과정이 다를까?</h3>
+      <div class="split">
+        <div>
+          <span class="lab">제가 맡은 것</span>
+          <ul class="prose">
+            <li>Spark SQL·PySpark로 행동 로그 조회·가공</li>
+            <li>세션 요약 6개 + 클릭 유형 13개 = 행동 변수 19개 설계</li>
+            <li>구매 4단계 퍼널 전환율 계산</li>
+            <li>카이제곱·피셔 정확 검정, 크래머 V로 집단 차이 검증</li>
+          </ul>
+        </div>
+        <div>
+          <span class="lab">설문 Q11 "저는 재미 삼아 온라인 제품을 쇼핑하는 것을 즐깁니다"</span>
           <table>
-            <thead><tr><th>지표</th><th>기존</th><th>개선</th></tr></thead>
+            <thead><tr><th>응답</th><th>집단</th><th>규모</th></tr></thead>
             <tbody>
-              <tr><td>Precision</td><td>0.796</td><td class="up">0.860</td></tr>
-              <tr><td>Recall</td><td>0.816</td><td class="up">0.832</td></tr>
-              <tr><td>F1-score</td><td>0.806</td><td class="up">0.846</td></tr>
+              <tr><td>3~5점</td><td>재미형</td><td>27명 · 281세션</td></tr>
+              <tr><td>1~2점</td><td>필요형</td><td>19명 · 229세션</td></tr>
+              <tr><td>무응답</td><td>제외</td><td>7명</td></tr>
             </tbody>
           </table>
-          <p class="muted">다른 데이터셋에서는 성능이 떨어져, 일반화 성능을 높이는 실험을 이어 가고 있습니다. 매주 랩미팅에서 진행 상황을 발표합니다.</p>
-        </div></div>
+          <p class="note" style="margin-top:10px">전체 692세션 중 510세션 분석. 'other' 클릭, 단순 오류성 클릭, 단계가 모호한 구매 클릭은 제외했습니다.</p>
+        </div>
       </div>
-    </article>
-  </div>
-
-  <section id="about" class="frame" aria-labelledby="about-title">
-    <div class="sec-head"><h2 id="about-title">About</h2><span class="label">소개</span></div>
-    <div class="about-grid">
-      <p>웹 화면을 만드는 일로 시작해 음성 AI 서비스와 컴퓨터비전 연구로 넓혀 왔습니다. 모델은 같은 기준으로 측정해 비교하고, 결론을 도출합니다. AI를 도구로써 활용하고 스스로 생각합니다.</p>
-      <div>
-        <div class="hist"><span class="label">awards/</span>
-          <ul>
-            <li><span>2025.07</span>보건복지부장관상</li>
-            <li><span>2025.10</span>성균관대 컨소시엄 산학협력 팀프로젝트 연구 발표 동상</li>
-            <li><span>2025.12</span>중소벤처기업부장관상</li>
-          </ul>
-        </div>
-        <div class="hist"><span class="label">education/</span>
-          <ul><li><span>2027.02</span>AI융합학과 학사 졸업 예정</li></ul>
-        </div>
-        <div class="hist"><span class="label">experience/</span>
-          <ul>
-            <li><span>2024</span>멋쟁이사자처럼 프론트엔드 트랙</li>
-            <li><span>2025</span>창업동아리 PASCAL AI 파트</li>
-            <li><span>2026.07</span>아이코어이앤씨 하계 인턴 - 사업개발팀</li>
-            <li><span>2026.03 –</span>컴퓨터비전 연구실 학부연구생</li>
-          </ul>
-        </div>
-        <div><span class="label">tools/</span>
-          <div class="skills"><span>Python</span><span>Whisper</span><span>RAG</span><span>BERT</span><span>Gemini API</span><span>Google Vision API</span></div>
-        </div>
+    </div>
+    <div class="msg">
+      <h3>클릭 로그를 구매 4단계 퍼널로 매핑하고, 세션을 변수 19개로 바꿨습니다</h3>
+      <div class="chips" style="--n:4">
+        <div class="chip"><b>탐색</b><span>search · suggested_term · filter · nav_bar · page_related</span></div>
+        <div class="chip"><b>평가</b><span>product_link · review · product_option</span></div>
+        <div class="chip"><b>장바구니</b><span>add_to_cart · cart_page_select · quantity</span></div>
+        <div class="chip"><b>구매</b><span>check_out · buy_now 계열 · 정기 배송 신청</span></div>
+      </div>
+      <div class="box"><b>세션 요약 변수 6개</b>total_actions · session_duration · unique_pages · input_count · click_ratio · input_ratio</div>
+      <p class="arrow">이 19개 변수가 팀의 Random Forest·SHAP 분석 입력으로 쓰였습니다</p>
+    </div>
+    <div class="msg">
+      <h3>구매 단계로 갈수록 차이가 커졌지만, 통계적으로 유의하지는 않았습니다</h3>
+      <div role="img" aria-label="단계별 전환율 재미형 대 필요형. 탐색 99.3 대 99.1, 평가 87.5 대 84.7, 장바구니 71.9 대 66.4, 구매 30.6 대 23.6 퍼센트. 피셔 검정 p와 크래머 V는 탐색 1.00, 0.000. 평가 0.37, 0.035. 장바구니 0.21, 0.050. 구매 0.09, 0.074.">
+        <div class="fun head"><span></span><span><span class="key a">재미형</span><span class="key">필요형</span></span><span style="text-align:right">피셔 p · 크래머 V</span></div>
+        <div class="fun"><span class="st">1단계 탐색</span><div class="two"><span class="ln a"><i style="--v:99.3"></i><b>99.3%</b></span><span class="ln"><i style="--v:99.1"></i><b>99.1%</b></span></div><span class="pv">1.00 · 0.000</span></div>
+        <div class="fun"><span class="st">2단계 평가</span><div class="two"><span class="ln a"><i style="--v:87.5"></i><b>87.5%</b></span><span class="ln"><i style="--v:84.7"></i><b>84.7%</b></span></div><span class="pv">0.37 · 0.035</span></div>
+        <div class="fun"><span class="st">3단계 장바구니</span><div class="two"><span class="ln a"><i style="--v:71.9"></i><b>71.9%</b></span><span class="ln"><i style="--v:66.4"></i><b>66.4%</b></span></div><span class="pv">0.21 · 0.050</span></div>
+        <div class="fun"><span class="st">4단계 구매</span><div class="two"><span class="ln a"><i style="--v:30.6"></i><b>30.6%</b></span><span class="ln"><i style="--v:23.6"></i><b>23.6%</b></span></div><span class="pv hi">0.09 · 0.074</span></div>
+      </div>
+      <p>4단계 구매 전환율은 재미형이 7%p 높았지만 p=0.09, 크래머 V=0.074로 효과가 작았습니다. 표본이 작아 검정력이 부족했을 가능성과, 두 집단이 실제로 비슷할 가능성을 함께 보고했습니다.</p>
+    </div>
+    <div class="msg">
+      <h3>검정 방법을 하나씩 더해, '유의하지 않음'을 정확하게 해석했습니다</h3>
+      <div class="three">
+        <div class="tile"><b>카이제곱 검정</b><p>두 집단의 단계별 전환율 차이가 우연인지 확인</p><small>4단계 p = 0.095</small></div>
+        <div class="tile"><b>피셔 정확 검정</b><p>표본이 작아 근사 없이 정확한 확률로 다시 확인</p><small>4단계 p = 0.090</small></div>
+        <div class="tile"><b>크래머 V</b><p>유의성과 별개로 차이의 크기(효과 크기)를 확인</p><small>0.000 → 0.074</small></div>
+      </div>
+    </div>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="frame contact" aria-labelledby="contact-title">
-    <h2 id="contact-title" class="label">contact/</h2>
-    <a class="mail" href="mailto:chaeyeonoqee@gmail.com">chaeyeonoqee@gmail.com</a>
-    <div class="foot label"><span>안채연 · AI Developer Portfolio</span><a href="#work">맨 위 작업 목록으로</a></div>
+  <!-- 기초 -->
+  <section id="basics" class="wrap">
+    <div class="divider">
+      <p class="word" aria-hidden="true">Basics</p>
+      <hr class="rule">
+    </div>
+    <div class="case">
+      <aside class="side"><div class="in"><h2>신경망 구조 직접 구현</h2><dl class="facts"><div><dt>기간</dt><dd>2026 2학기, 진행 중</dd></div><div><dt>소속</dt><dd>기계학습도구 수업 실습</dd></div><div><dt>데이터</dt><dd>MNIST, CIFAR-10</dd></div><div><dt>기술</dt><dd>PyTorch</dd></div><div><dt>구현</dt><dd>LLM 없이 실습 틀 위에서 직접</dd></div></dl></div></aside>
+      <div class="body">
+    <div class="msg">
+      <h3>수업 실습에서 LLM 없이 MLP부터 ResNet까지 구현했습니다</h3>
+      <div class="chips" style="--n:4">
+        <div class="chip"><b>MLP</b><span>BatchNorm · Dropout · Skip connection · 가중치 초기화</span></div>
+        <div class="chip"><b>학습 루프</b><span>forward · loss · backward · 검증 · best 가중치 저장</span></div>
+        <div class="chip"><b>CNN</b><span>MaxPool과 stride 비교 · stage 단위 skip connection</span></div>
+        <div class="chip on"><b>AlexNet · VGG-16 · ResNet</b><span>논문 구조 구현 · ResNet BasicBlock</span></div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 그 밖의 -->
+  <section id="others" class="wrap">
+    <div class="divider">
+      <p class="word" aria-hidden="true">Others</p>
+      <hr class="rule">
+      <h2>그 밖의 경험</h2>
+    </div>
+    <div class="others">
+      <div class="other">
+        <h3>강의 보조 프로그램 NODO<small>IT교육 기업 하계 인턴 · 사업개발 1팀, 3인 팀 · 2026.07</small></h3>
+        <div class="prose">
+          <p>강의 자료를 올리면 AI가 학습 로드맵을 만들고, 학생은 익명으로 질문하며 실시간으로 진도를 따라갑니다.</p>
+          <ul class="prose">
+            <li>과업 지시서를 작성해 기능과 목표 정의</li>
+            <li>IT에 익숙하지 않은 강의자를 위한 단순한 화면 설계</li>
+            <li>3주 안에 끝내도록 기능 우선순위를 조율해 범위 축소</li>
+            <li>기술 스택 버전·유지보수 비용 문서화, 최종 발표</li>
+          </ul>
+          <p>기한 안에 완성해 발표했고, 회사가 도입을 검토해 유지보수 문서를 전달했습니다. 개발은 팀원이 맡았습니다.</p>
+        </div>
+      </div>
+      <div class="other">
+        <h3>Nurspace 간병인 매칭 웹<small>멋쟁이사자처럼 해커톤 · 2024</small></h3>
+        <div class="prose"><p>UI 디자인과 React 화면 구현을 맡았습니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 소개 -->
+  <section id="about" class="wrap">
+    <div class="divider">
+      <p class="word">About</p>
+      <div class="mailrow"><span class="mail">chaeyeonoqee@gmail.com</span></div>
+    </div>
+    <dl class="about-rows">
+      <div><dt>학력</dt><dd>강원대학교 AI융합학과 (2027.02 졸업 예정)</dd></div>
+      <div><dt>연구</dt><dd>컴퓨터비전 연구실 학부연구생 (2026.01~)</dd></div>
+      <div><dt>인턴</dt><dd>IT교육 기업 하계 인턴 (2026, 1개월)</dd></div>
+      <div><dt>활동</dt><dd><span>창업동아리 PASCAL팀 AI 파트 (2025)</span><span>멋쟁이사자처럼 프론트엔드 트랙 (2024)</span></dd></div>
+      <div><dt>기술</dt><dd>Python · PyTorch · Spark SQL · PySpark · ONNX Runtime · Hugging Face · LangChain · Gemini API · Google Vision API</dd></div>
+      <div><dt>CS 기초</dt><dd>자료구조 · 컴퓨터구조 수강, C언어 개인 학습</dd></div>
+      <div><dt>수상</dt><dd><span>보건복지부장관상 최우수상 (2025.07)</span><span>성균관대 컨소시엄 산학협력 팀프로젝트 동상 (2025.10)</span><span>중소벤처기업부장관상 특별상 (2025.12)</span></dd></div>
+      <div><dt>작업 방식</dt><dd>코드는 AI 코딩 도구로 작성하고, 문제 정의와 구조 설계, 결과 검증은 직접 합니다. 모델은 같은 기준으로 측정해 비교한 뒤 고릅니다.</dd></div>
+    </dl>
+    <div class="foot"><span>안채연 · AI 개발 포트폴리오</span><a href="#work">맨 위 작업 목록으로</a></div>
   </section>
 </main>
 
 <script>
 (function () {
-  var root = document.documentElement, btn = document.getElementById('theme-toggle');
-  function current() { return root.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
-  function label() { btn.textContent = current() === 'dark' ? '밝게 보기' : '어둡게 보기'; }
-  try { var saved = localStorage.getItem('theme'); if (saved === 'dark' || saved === 'light') root.dataset.theme = saved; } catch (e) {}
-  label();
-  btn.addEventListener('click', function () {
-    var next = current() === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch (e) {}
-    label();
-  });
+  var root = document.documentElement;
+  if (!root.classList.contains('typing')) return;
+  var word = document.querySelector('.cover .word'), typed = word.querySelector('.typed'), node = typed.firstChild;
+  var started = false;
+  function finish() { typed.style.clipPath = ''; root.classList.remove('typing'); }
+  function start() {
+    if (started) return;
+    started = true;
+    var box = typed.getBoundingClientRect(), edges = [0], range = document.createRange();
+    for (var i = 1; i <= node.length; i++) { range.setStart(node, 0); range.setEnd(node, i); edges.push(range.getBoundingClientRect().right - box.left); }
+    var caret = document.createElement('span');
+    caret.className = 'caret';
+    word.appendChild(caret);
+    var n = 0;
+    function show() {
+      typed.style.clipPath = 'inset(-.2em ' + (box.width - edges[n]) + 'px -.2em -.2em)';
+      caret.style.left = edges[n] + 'px';
+      if (n++ < node.length) { setTimeout(show, 95); return; }
+      finish();
+      setTimeout(function () { caret.style.opacity = '0'; setTimeout(function () { caret.remove(); }, 260); }, 350);
+    }
+    show();
+  }
+  // 글꼴이 늦으면 글자 폭이 달라지므로 기다리되, 0.8초를 넘기면 그대로 시작한다
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
+  else start();
+  setTimeout(start, 800);
 })();
-document.querySelectorAll('.case figure > img').forEach(function (img) {
+document.querySelectorAll('img.zoomable').forEach(function (img) {
   var a = document.createElement('a');
   a.className = 'zoom'; a.href = img.getAttribute('src'); a.target = '_blank'; a.rel = 'noopener';
+  a.setAttribute('aria-label', '이미지 크게 보기');
   img.replaceWith(a); a.appendChild(img);
 });
 document.querySelectorAll('.copy').forEach(function (btn) {
@@ -636,33 +682,16 @@ document.querySelectorAll('.copy').forEach(function (btn) {
   });
 });
 if ('IntersectionObserver' in window) {
-  // 등장: 한 번 보이면 끝. 끝난 뒤 reveal 클래스를 지워 원래 호버 전환이 지연 없이 돌아오게 함
-  var seen = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      var el = e.target;
-      el.classList.add('in');
-      seen.unobserve(el);
-      el.addEventListener('transitionend', function done(ev) {
-        if (ev.target !== el || ev.propertyName !== 'opacity') return;
-        el.classList.remove('reveal', 'in'); el.style.removeProperty('--d');
-        el.removeEventListener('transitionend', done);
-      });
-    });
-  }, { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal').forEach(function (el) { seen.observe(el); });
-
-  // 메뉴에 지금 보고 있는 구역 표시
   var links = {};
   document.querySelectorAll('.bar nav a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
   var where = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;
-      var id = e.target.id === 'about' || e.target.id === 'contact' ? e.target.id : 'work';
+      var id = e.target.id === 'basics' || e.target.id === 'about' ? e.target.id : 'work';
       Object.keys(links).forEach(function (k) { if (k === id) links[k].setAttribute('aria-current', 'true'); else links[k].removeAttribute('aria-current'); });
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
-  document.querySelectorAll('#work, .case, #about, #contact').forEach(function (el) { where.observe(el); });
+  document.querySelectorAll('#work, #research, #deploy, #pipeline, #service, #analysis, #basics, #others, #about').forEach(function (el) { where.observe(el); });
 }
 </script>
 </body>
